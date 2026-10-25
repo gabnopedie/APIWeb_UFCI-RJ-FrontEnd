@@ -41,6 +41,7 @@ Certifique-se de que o **Backend (NestJS)** já está clonado na última versão
 
 1. Clone este repositório do front-end e entre na pasta:
    git clone https://github.com/gabnopedie/APIWeb_UFCI-RJ-FrontEnd.git
+   
    cd APIWeb_UFCI-RJ-FrontEnd
 
 2. Instale as dependências do projeto:
