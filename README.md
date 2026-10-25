@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎲 Sistema de Aluguel de Jogos de Tabuleiro (Front-End)
 
-## Getting Started
+Interface WeB desenvolvida em **Next.js** para o projeto da P2 da disciplina de **Programação WeB** da UFCI/RJ. O sistema gerencia o acervo, contratos de locação, controle financeiro de pagamentos e autenticação de usuários de uma locadora de jogos de tabuleiro.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 O que já foi desenvolvido (Até o momento)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Autenticação (`/login`):** Tela de acesso, validação de e-mail/senha, tratamento de erros de credenciais e armazenamento  do token JWT no `localStorage`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+* **Módulo de Aluguéis:** Listagem de contratos de locação, visualização de status ativos/pendentes e interface para formalização de novos aluguéis.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **Módulo de Pagamentos:** Painel financeiro para acompanhar transações, registrar quitações e verificar o status de pagamentos vinculados aos aluguéis.
 
-## Learn More
+* **Padronização Visual:** Interface construída com identidade visual (tons de dourado, off-white e preto clássico), utilizando componentes limpos e tipografia refinada (`Playfair Display` + fontes do sistema), tentando  simular um tabuleiro de xadrez.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚧 O que ainda falta fazer:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* [ ] **Módulo de Categorias:** Telas de listagem, cadastro e vínculo de categorias aos jogos de tabuleiro.
 
-## Deploy on Vercel
+* [ ] **Módulo de Usuários:** Gestão de perfis de clientes (edição de dados, visualização de histórico individual).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* [ ] **Módulo de Reviews:** Interface para os usuários deixarem notas e comentários sobre os jogos alugados.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* **Next.js** (App Router)
+* **React** (Hooks e manipulação de estado local)
+* **CSS Modules / Estilização Nativa**
+* **Fetch API** (Comunicação assíncrona com o backend NestJS)
+
+---
+
+## ⚙️ Como Rodar o Projeto Localmente
+
+Certifique-se de que o **Backend (NestJS)** já está clonado na última versão da `main` e rodando na sua máquina (na porta `3000`).
+
+1. Clone este repositório do front-end e entre na pasta:
+   ```bash
+git clone https://github.com/gabnopedie/APIWeb_UFCI-RJ-FrontEnd.git
+cd APIWeb_UFCI-RJ-FrontEnd
+
+2. Instale as dependências do projeto:
+    `npm install`
+
+3. Inicie o servidor de desenvolvimento:
+    `npm run dev`
+
+4. Abra o navegador e acesse o endereço indicado no terminal: http://localhost:3001. O BackEnd roda na 3000!
