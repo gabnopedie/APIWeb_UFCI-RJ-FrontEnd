@@ -40,9 +40,8 @@ Interface WeB desenvolvida em **Next.js** para o projeto da P2 da disciplina de 
 Certifique-se de que o **Backend (NestJS)** já está clonado na última versão da `main` e rodando na sua máquina (na porta `3000`).
 
 1. Clone este repositório do front-end e entre na pasta:
-   ```bash
-git clone https://github.com/gabnopedie/APIWeb_UFCI-RJ-FrontEnd.git
-cd APIWeb_UFCI-RJ-FrontEnd
+   ```bash git clone https://github.com/gabnopedie/APIWeb_UFCI-RJ-FrontEnd.git
+   cd APIWeb_UFCI-RJ-FrontEnd
 
 2. Instale as dependências do projeto:
     `npm install`
