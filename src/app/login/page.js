@@ -1,6 +1,8 @@
 "use client";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 export default function Login() {
   const roteador = useRouter();
@@ -51,31 +53,25 @@ export default function Login() {
         <form onSubmit={lidarComLogin} style={estilos.formulario}>
           <h2 style={estilos.tituloFormulario}>Seu Acesso</h2>
           
-          <div style={estilos.grupoEntrada}>
-            <label style={estilos.rotulo}>E-MAIL</label>
-            <input 
-              type="email" 
-              required 
-              style={estilos.entradaTexto} 
-              value={email} 
-              onChange={(e) => definirEmail(e.target.value)} 
-            />
-          </div>
+          <Input 
+            label="E-MAIL" 
+            type="email" 
+            value={email} 
+            onChange={(e) => definirEmail(e.target.value)} 
+            required 
+          />
 
-          <div style={estilos.grupoEntrada}>
-            <label style={estilos.rotulo}>SENHA</label>
-            <input 
-              type="password" 
-              required 
-              style={estilos.entradaTexto} 
-              value={senha} 
-              onChange={(e) => definirSenha(e.target.value)} 
-            />
-          </div>
+          <Input 
+            label="SENHA" 
+            type="password" 
+            value={senha} 
+            onChange={(e) => definirSenha(e.target.value)} 
+            required 
+          />
 
           {erro && <span style={estilos.mensagemErro}>{erro}</span>}
 
-          <button type="submit" style={estilos.botaoEntrar}>ENTRAR NO SISTEMA</button>
+          <Button type="submit">ENTRAR NO SISTEMA</Button>
         </form>
       </section>
     </main>
@@ -92,9 +88,5 @@ const estilos = {
   conteudo: { padding: '40px 20px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexGrow: 1 },
   formulario: { display: 'flex', flexDirection: 'column', gap: '24px', backgroundColor: '#FAF7F2', padding: '50px', border: '1px solid #EAEAEA', width: '100%', maxWidth: '450px' },
   tituloFormulario: { fontSize: '24px', fontWeight: 'normal', textAlign: 'center', margin: '0 0 10px 0' },
-  grupoEntrada: { display: 'flex', flexDirection: 'column', gap: '8px' },
-  rotulo: { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', fontSize: '10px', letterSpacing: '2px', color: '#333333', fontWeight: '600' },
-  entradaTexto: { padding: '14px', border: '1px solid #CCCCCC', backgroundColor: '#FFFFFF', fontSize: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', outline: 'none' },
-  botaoEntrar: { backgroundColor: '#000000', color: '#FFFFFF', padding: '16px', fontSize: '11px', letterSpacing: '2px', fontWeight: 'bold', border: 'none', cursor: 'pointer', marginTop: '10px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' },
   mensagemErro: { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', color: '#D93025', fontSize: '11px', textAlign: 'center', fontWeight: 'bold', letterSpacing: '1px' }
 };

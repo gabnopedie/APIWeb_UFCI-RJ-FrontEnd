@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Input from '../../../components/Input';
+import Button from '../../../components/Button';
 
 export default function NovoAluguel() {
   const roteador = useRouter();
@@ -66,81 +68,137 @@ export default function NovoAluguel() {
 
   return (
     <main style={estilos.recipiente}>
-      <div style={estilos.bordaSuperiorDourada}></div>
-      <div style={estilos.bordaSuperiorFina}></div>
-
-      <header style={estilos.cabecalho}>
-        <div style={estilos.linhaTopo}>
-          <Link href="/alugueis" style={estilos.linkVoltar}>&#8592; CANCELAR OPERAÇÃO</Link>
-        </div>
-        <h1 style={estilos.titulo}>Formalizar Contrato</h1>
-        <div style={estilos.linhaDecorativa}></div>
-      </header>
-
-      <section style={estilos.conteudo}>
-        <form onSubmit={submeterFormulario} style={estilos.formulario}>
-          <div style={estilos.linhaGrade}>
-            <div style={estilos.grupoEntrada}>
-              <label style={estilos.rotulo}>ID DO CLIENTE *</label>
-              <input type="number" min="1" required style={estilos.entradaTexto} value={dados.id_usuario} onChange={(e) => atualizarCampo('id_usuario', e.target.value)} />
-            </div>
-            <div style={estilos.grupoEntrada}>
-              <label style={estilos.rotulo}>ID DO JOGO *</label>
-              <input type="number" min="1" required style={estilos.entradaTexto} value={dados.id_jogo} onChange={(e) => atualizarCampo('id_jogo', e.target.value)} />
-            </div>
+      <div style={estilos.sobreposicaoConteudo}>
+        <header style={estilos.cabecalhoGlass}>
+          <div style={estilos.linhaTopo}>
+            <Link href="/alugueis" style={estilos.linkVoltar}>&#8592; Cancelar operação</Link>
           </div>
+          <h1 style={estilos.titulo}>Formalizar contrato</h1>
+          <div style={estilos.linhaDecorativa}></div>
+        </header>
 
-          <div style={estilos.linhaGrade}>
-            <div style={estilos.grupoEntrada}>
-              <label style={estilos.rotulo}>QUANTIDADE *</label>
-              <input type="number" min="1" required style={estilos.entradaTexto} value={dados.quantidade} onChange={(e) => atualizarCampo('quantidade', e.target.value)} />
+        <section style={estilos.conteudo}>
+          <form onSubmit={submeterFormulario} style={estilos.formularioGlass}>
+            <div style={estilos.linhaGrade}>
+              <Input 
+                label="ID do cliente *" 
+                type="number" 
+                value={dados.id_usuario} 
+                onChange={(e) => atualizarCampo('id_usuario', e.target.value)} 
+                required 
+              />
+              <Input 
+                label="ID do jogo *" 
+                type="number" 
+                value={dados.id_jogo} 
+                onChange={(e) => atualizarCampo('id_jogo', e.target.value)} 
+                required 
+              />
             </div>
-            <div style={estilos.grupoEntrada}>
-              <label style={estilos.rotulo}>DEVOLUÇÃO PREVISTA</label>
-              <input type="date" style={estilos.entradaTexto} value={dados.data_prevista_devolucao} onChange={(e) => atualizarCampo('data_prevista_devolucao', e.target.value)} />
+
+            <div style={estilos.linhaGrade}>
+              <Input 
+                label="Quantidade *" 
+                type="number" 
+                value={dados.quantidade} 
+                onChange={(e) => atualizarCampo('quantidade', e.target.value)} 
+                required 
+              />
+              <Input 
+                label="Devolução prevista" 
+                type="date" 
+                value={dados.data_prevista_devolucao} 
+                onChange={(e) => atualizarCampo('data_prevista_devolucao', e.target.value)} 
+              />
             </div>
-          </div>
 
-          <div style={estilos.grupoEntradaUnico}>
-            <label style={estilos.rotuloCaixa}>
-              <input type="checkbox" style={estilos.caixaSelecao} checked={dados.local} onChange={(e) => atualizarCampo('local', e.target.checked)} />
-              USO EXCLUSIVO NAS DEPENDÊNCIAS (LOCAL)
-            </label>
-          </div>
+            <div style={estilos.grupoEntradaUnico}>
+              <label style={estilos.rotuloCaixa}>
+                <input type="checkbox" style={estilos.caixaSelecao} checked={dados.local} onChange={(e) => atualizarCampo('local', e.target.checked)} />
+                Uso exclusivo nas dependências (local)
+              </label>
+            </div>
 
-          <div style={estilos.grupoEntradaUnico}>
-            <label style={estilos.rotulo}>OBSERVAÇÕES DO CONTRATO</label>
-            <textarea maxLength="5000" style={estilos.areaTexto} value={dados.observacoes} onChange={(e) => atualizarCampo('observacoes', e.target.value)} />
-          </div>
+            <div style={estilos.grupoEntradaUnico}>
+              <label style={estilos.rotuloSimples}>Observações do contrato</label>
+              <textarea maxLength="5000" style={estilos.areaTexto} value={dados.observacoes} onChange={(e) => atualizarCampo('observacoes', e.target.value)} />
+            </div>
 
-          {erro && <span style={estilos.mensagemErro}>{erro}</span>}
-          
-          <button type="submit" style={estilos.botaoAssinar}>EMITIR CONTRATO</button>
-        </form>
-      </section>
+            {erro && <span style={estilos.mensagemErro}>{erro}</span>}
+            
+            <Button type="submit">Emitir contrato</Button>
+          </form>
+        </section>
+      </div>
     </main>
   );
 }
 
 const estilos = {
-  recipiente: { minHeight: '100vh', backgroundColor: '#FFFFFF', fontFamily: '"Playfair Display", "Georgia", serif', color: '#000000', margin: 0 },
-  bordaSuperiorDourada: { width: '100%', height: '4px', backgroundColor: '#C5A059' },
-  bordaSuperiorFina: { width: '100%', height: '1px', backgroundColor: '#000000' },
-  cabecalho: { padding: '40px 60px 20px 60px', display: 'flex', flexDirection: 'column', alignItems: 'center' },
-  linhaTopo: { width: '100%', display: 'flex', justifyContent: 'flex-start', marginBottom: '40px' },
-  linkVoltar: { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', fontSize: '11px', letterSpacing: '2px', color: '#000000', textDecoration: 'none', fontWeight: '600' },
-  titulo: { fontSize: '36px', fontWeight: 'normal', letterSpacing: '2px', margin: '0 0 20px 0' },
-  linhaDecorativa: { width: '100px', height: '1px', backgroundColor: '#C5A059', margin: '0 auto' },
-  conteudo: { padding: '40px 60px', maxWidth: '800px', margin: '0 auto', width: '100%' },
-  formulario: { display: 'flex', flexDirection: 'column', gap: '30px', backgroundColor: '#FAF7F2', padding: '50px', border: '1px solid #EAEAEA' },
-  linhaGrade: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' },
-  grupoEntrada: { display: 'flex', flexDirection: 'column', gap: '10px' },
-  grupoEntradaUnico: { display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' },
-  rotulo: { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', fontSize: '10px', letterSpacing: '2px', color: '#333333', fontWeight: '600' },
-  rotuloCaixa: { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', fontSize: '11px', letterSpacing: '1px', color: '#000000', display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', fontWeight: '600' },
-  caixaSelecao: { width: '16px', height: '16px', accentColor: '#C5A059' },
-  entradaTexto: { padding: '16px', border: '1px solid #CCCCCC', backgroundColor: '#FFFFFF', fontSize: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', outline: 'none' },
-  areaTexto: { padding: '16px', border: '1px solid #CCCCCC', backgroundColor: '#FFFFFF', fontSize: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', minHeight: '120px', resize: 'vertical', outline: 'none' },
-  botaoAssinar: { backgroundColor: '#000000', color: '#FFFFFF', padding: '20px', fontSize: '12px', letterSpacing: '3px', fontWeight: 'bold', border: 'none', cursor: 'pointer', marginTop: '20px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' },
-  mensagemErro: { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', color: '#D93025', fontSize: '12px', textAlign: 'center', fontWeight: 'bold', letterSpacing: '1px' }
+  recipiente: { 
+    minHeight: '100vh', 
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', 
+    margin: 0,
+    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%231a1a1a\'/%3E%3Crect x=\'100\' width=\'100\' height=\'100\' fill=\'%23242424\'/%3E%3Crect y=\'100\' width=\'100\' height=\'100\' fill=\'%23242424\'/%3E%3Crect x=\'100\' y=\'100\' width=\'100\' height=\'100\' fill=\'%231a1a1a\'/%3E%3Ctext x=\'50\' y=\'75\' font-size=\'65\' text-anchor=\'middle\' fill=\'%23222222\'%3E%E2%99%9E%3C/text%3E%3Ctext x=\'150\' y=\'75\' font-size=\'65\' text-anchor=\'middle\' fill=\'%232c2c2c\'%3E%E2%99%9C%3C/text%3E%3Ctext x=\'50\' y=\'175\' font-size=\'65\' text-anchor=\'middle\' fill=\'%232c2c2c\'%3E%E2%99%9F%3C/text%3E%3Ctext x=\'150\' y=\'175\' font-size=\'65\' text-anchor=\'middle\' fill=\'%23222222\'%3E%E2%99%9B%3C/text%3E%3C/svg%3E")',
+    backgroundSize: '200px 200px',
+    backgroundPosition: 'center',
+    backgroundAttachment: 'fixed',
+  },
+  sobreposicaoConteudo: { 
+    minHeight: '100vh', 
+    display: 'flex', 
+    flexDirection: 'column', 
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.45)', 
+    padding: '40px 20px' 
+  },
+  cabecalhoGlass: { 
+    backgroundColor: 'rgba(255, 255, 255, 0.65)', 
+    backdropFilter: 'blur(32px)', 
+    WebkitBackdropFilter: 'blur(32px)', 
+    padding: '30px 50px', 
+    borderRadius: '16px', 
+    border: '1px solid rgba(255, 255, 255, 0.5)', 
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)', 
+    width: '100%', 
+    maxWidth: '800px',
+    marginBottom: '30px'
+  },
+  linhaTopo: { display: 'flex', justifyContent: 'flex-start', marginBottom: '20px' },
+  linkVoltar: { fontSize: '14px', color: '#111111', textDecoration: 'none', fontWeight: '600' },
+  titulo: { fontSize: '32px', fontWeight: 'bold', margin: '0 0 16px 0', color: '#111111', textAlign: 'center' },
+  linhaDecorativa: { width: '80px', height: '2px', backgroundColor: '#C5A059', margin: '0 auto' },
+  conteudo: { width: '100%', maxWidth: '800px' },
+  formularioGlass: { 
+    display: 'flex', 
+    flexDirection: 'column', 
+    gap: '24px', 
+    backgroundColor: 'rgba(20, 20, 20, 0.70)', 
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    padding: '40px', 
+    borderRadius: '16px',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)' 
+  },
+  linhaGrade: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' },
+  grupoEntradaUnico: { display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' },
+  rotuloSimples: { fontSize: '13px', letterSpacing: '0.5px', color: '#d1d1d1', fontWeight: '500' },
+  rotuloCaixa: { fontSize: '14px', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', fontWeight: '500' },
+  caixaSelecao: { width: '18px', height: '18px', accentColor: '#C5A059' },
+  areaTexto: { 
+    padding: '14px', 
+    borderRadius: '8px', 
+    border: '1px solid rgba(255, 255, 255, 0.15)', 
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', 
+    color: '#ffffff', 
+    fontSize: '15px', 
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', 
+    minHeight: '120px', 
+    resize: 'vertical', 
+    outline: 'none',
+    width: '100%',
+    boxSizing: 'border-box'
+  },
+  mensagemErro: { color: '#ff4d4d', fontSize: '13px', textAlign: 'center', fontWeight: '500' }
 };

@@ -3,75 +3,65 @@ import Link from 'next/link';
 export default function PaginaInicial() {
   return (
     <main style={estilos.recipiente}>
-      <div style={estilos.bordaSuperiorDourada}></div>
-      <div style={estilos.bordaSuperiorFina}></div>
+      <div style={estilos.sobreposicaoConteudo}>
+        <header style={estilos.cabecalhoGlass}>
+          <h1 style={estilos.tituloMarca}>SISTEMA DE ALUGUEL DE JOGOS DE TABULEIRO</h1>
+          <span style={estilos.subtituloMarca}>Programação WeB | UFCI - RJ</span>
+          <p style={estilos.descricaoEditorial}>Painel de controle e catalogação</p>
+        </header>
 
-      <header style={estilos.cabecalho}>
-        <h1 style={estilos.tituloMarca}>SISTEMA DE ALUGUEL DE JOGOS DE TABULEIRO</h1>
-        <span style={estilos.subtituloMarca}>Programação WeB | UFCI - RJ</span>
-      </header>
+        <section style={estilos.secaoModulos}>
+          <div style={estilos.gradeDeModulos}>
+            <Link href="/categorias" style={estilos.cartaoGlass}>
+              <div>
+                <h3 style={estilos.tituloCartao}>CATEGORIAS</h3>
+                <p style={estilos.subtituloCartao}>CLASSIFICAÇÃO</p>
+              </div>
+              <div style={estilos.setaDourada}>&#10132;</div>
+            </Link>
 
-      <section style={estilos.areaTabuleiro}>
-        <div style={estilos.conteudoInvertido}>
-          <p style={estilos.descricaoEditorial}>
-            Painel de controle e catalogação
-          </p>
-        </div>
-      </section>
+            <Link href="/jogos" style={estilos.cartaoGlass}>
+              <div>
+                <h3 style={estilos.tituloCartao}>JOGOS DO ACERVO</h3>
+                <p style={estilos.subtituloCartao}>CATÁLOGO</p>
+              </div>
+              <div style={estilos.setaDourada}>&#10132;</div>
+            </Link>
 
-      <section style={estilos.secaoModulos}>
-        <div style={estilos.gradeDeModulos}>
-          
-          <Link href="/categorias" style={{...estilos.cartaoBase, ...estilos.fundoBranco}}>
-            <div>
-              <h3 style={estilos.tituloEscuro}>CATEGORIAS</h3>
-              <p style={estilos.subtituloEscuro}>CLASSIFICAÇÃO</p>
-            </div>
-            <div style={estilos.setaEscura}>&#10132;</div>
-          </Link>
+            <Link href="/usuarios" style={estilos.cartaoGlass}>
+              <div>
+                <h3 style={estilos.tituloCartao}>USUÁRIOS</h3>
+                <p style={estilos.subtituloCartao}>MEMBROS REGISTRADOS</p>
+              </div>
+              <div style={estilos.setaDourada}>&#10132;</div>
+            </Link>
 
-          <Link href="/jogos" style={{...estilos.cartaoBase, ...estilos.fundoDourado}}>
-            <div>
-              <h3 style={estilos.tituloEscuro}>JOGOS DO ACERVO</h3>
-              <p style={estilos.subtituloEscuro}>CATÁLOGO</p>
-            </div>
-            <div style={estilos.setaEscura}>&#10132;</div>
-          </Link>
+            <Link href="/alugueis" style={estilos.cartaoGlass}>
+              <div>
+                <h3 style={estilos.tituloCartao}>ALUGUÉIS</h3>
+                <p style={estilos.subtituloCartao}>CONTRATOS ATIVOS</p>
+              </div>
+              <div style={estilos.setaDourada}>&#10132;</div>
+            </Link>
 
-          <Link href="/usuarios" style={{...estilos.cartaoBase, ...estilos.fundoMarromClaro}}>
-            <div>
-              <h3 style={estilos.tituloClaro}>USUÁRIOS</h3>
-              <p style={estilos.subtituloClaro}>MEMBROS REGISTRADOS</p>
-            </div>
-            <div style={estilos.setaClara}>&#10132;</div>
-          </Link>
+            <Link href="/pagamentos" style={estilos.cartaoGlass}>
+              <div>
+                <h3 style={estilos.tituloCartao}>PAGAMENTOS</h3>
+                <p style={estilos.subtituloCartao}>GESTÃO FINANCEIRA</p>
+              </div>
+              <div style={estilos.setaDourada}>&#10132;</div>
+            </Link>
 
-          <Link href="/alugueis" style={{...estilos.cartaoBase, ...estilos.fundoMarromEscuro}}>
-            <div>
-              <h3 style={estilos.tituloClaro}>ALUGUÉIS</h3>
-              <p style={estilos.subtituloDourado}>CONTRATOS ATIVOS</p>
-            </div>
-            <div style={estilos.setaDourada}>&#10132;</div>
-          </Link>
-
-          <Link href="/pagamentos" style={{...estilos.cartaoBase, ...estilos.fundoPretoMisto}}>
-            <div>
-              <h3 style={estilos.tituloClaro}>PAGAMENTOS</h3>
-              <p style={estilos.subtituloDourado}>GESTÃO FINANCEIRA</p>
-            </div>
-            <div style={estilos.setaDourada}>&#10132;</div>
-          </Link>
-
-          <Link href="/reviews" style={{...estilos.cartaoBase, ...estilos.fundoPretoAbsoluto}}>
-            <div>
-              <h3 style={estilos.tituloClaro}>REVIEWS</h3>
-              <p style={estilos.subtituloDourado}>AVALIAÇÕES</p>
-            </div>
-            <div style={estilos.setaDourada}>&#10132;</div>
-          </Link>
-
-        </div>
-      </section>
+            <Link href="/reviews" style={estilos.cartaoGlass}>
+              <div>
+                <h3 style={estilos.tituloCartao}>REVIEWS</h3>
+                <p style={estilos.subtituloCartao}>AVALIAÇÕES</p>
+              </div>
+              <div style={estilos.setaDourada}>&#10132;</div>
+            </Link>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
@@ -79,146 +69,100 @@ export default function PaginaInicial() {
 const estilos = {
   recipiente: {
     minHeight: '100vh',
-    backgroundColor: '#FFFFFF',
-    fontFamily: '"Playfair Display", "Georgia", serif',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     margin: 0,
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  bordaSuperiorDourada: {
-    width: '100%',
-    height: '4px',
-    backgroundColor: '#C5A059'
-  },
-  bordaSuperiorFina: {
-    width: '100%',
-    height: '1px',
-    backgroundColor: '#000000'
-  },
-  cabecalho: {
-    padding: '60px 20px 40px 20px',
-    textAlign: 'center',
-    backgroundColor: '#FFFFFF'
-  },
-  tituloMarca: {
-    fontSize: '32px',
-    fontWeight: 'normal',
-    letterSpacing: '4px',
-    margin: '0 0 12px 0',
-    color: '#000000'
-  },
-  subtituloMarca: {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: '12px',
-    letterSpacing: '6px',
-    fontWeight: '600',
-    color: '#000000'
-  },
-  areaTabuleiro: {
-    flexGrow: 1,
-    width: '100%',
-    maxHeight: '200px',
-    backgroundColor: '#FFFFFF',
-    backgroundImage: 'conic-gradient(#000000 90deg, transparent 90deg 180deg, #000000 180deg 270deg, transparent 270deg)',
-    backgroundSize: '100px 100px',
+    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23111111\'/%3E%3Crect x=\'100\' width=\'100\' height=\'100\' fill=\'%23f0f0f0\'/%3E%3Crect y=\'100\' width=\'100\' height=\'100\' fill=\'%23f0f0f0\'/%3E%3Crect x=\'100\' y=\'100\' width=\'100\' height=\'100\' fill=\'%23111111\'/%3E%3Ctext x=\'50\' y=\'70\' font-size=\'50\' text-anchor=\'middle\' fill=\'%23222222\'%3E%E2%99%9E%3C/text%3E%3Ctext x=\'150\' y=\'70\' font-size=\'50\' text-anchor=\'middle\' fill=\'%23e4e4e4\'%3E%E2%99%9C%3C/text%3E%3Ctext x=\'50\' y=\'170\' font-size=\'50\' text-anchor=\'middle\' fill=\'%23e4e4e4\'%3E%E2%99%9F%3C/text%3E%3Ctext x=\'150\' y=\'170\' font-size=\'50\' text-anchor=\'middle\' fill=\'%23222222\'%3E%E2%99%9B%3C/text%3E%3C/svg%3E")',
+    backgroundSize: '200px 200px',
     backgroundPosition: 'center',
+    backgroundAttachment: 'fixed',
+  },
+  sobreposicaoConteudo: {
+    minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '40px 0'
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    padding: '40px 20px'
   },
-  conteudoInvertido: {
-    color: '#FFFFFF',
-    mixBlendMode: 'difference',
+  cabecalhoGlass: {
+    backgroundColor: 'rgba(255, 255, 255, 0.65)',
+    backdropFilter: 'blur(32px)',
+    WebkitBackdropFilter: 'blur(32px)',
+    padding: '40px 60px',
+    borderRadius: '16px',
+    border: '1px solid rgba(255, 255, 255, 0.5)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
     textAlign: 'center',
-    width: '100%',
-    padding: '20px 0'
+    marginBottom: '60px',
+    maxWidth: '800px',
+    width: '100%'
+  },
+  tituloMarca: {
+    fontSize: '32px',
+    fontWeight: 'bold',
+    letterSpacing: '2px',
+    margin: '0 0 12px 0',
+    color: '#111111'
+  },
+  subtituloMarca: {
+    fontSize: '12px',
+    letterSpacing: '6px',
+    fontWeight: '600',
+    color: '#333333',
+    display: 'block',
+    marginBottom: '20px'
   },
   descricaoEditorial: {
-    fontSize: '28px',
-    fontStyle: 'italic',
-    letterSpacing: '2px',
-    margin: 0
+    fontSize: '20px',
+    fontWeight: '400',
+    letterSpacing: '1px',
+    margin: 0,
+    color: '#444444'
   },
   secaoModulos: {
     width: '100%',
-    padding: '0',
+    maxWidth: '1000px',
     display: 'flex',
     justifyContent: 'center',
-    marginTop: 'auto'
   },
   gradeDeModulos: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(6, 1fr)',
-    gap: '0',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '24px',
     width: '100%'
   },
-  cartaoBase: {
-    padding: '24px 20px',
+  cartaoGlass: {
+    backgroundColor: 'rgba(20, 20, 20, 0.70)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    padding: '30px 24px',
+    borderRadius: '12px',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     textDecoration: 'none',
     transition: 'transform 0.2s',
-    height: '90px'
   },
-  fundoBranco: { backgroundColor: '#FFFFFF' },
-  fundoDourado: { backgroundColor: '#C5A059' },
-  fundoMarromClaro: { backgroundColor: '#8C6239' },
-  fundoMarromEscuro: { backgroundColor: '#4A2C1B' },
-  fundoPretoMisto: { backgroundColor: '#2A1F19' },
-  fundoPretoAbsoluto: { backgroundColor: '#0A0A0A' },
-  
-  tituloEscuro: {
-    fontSize: '15px',
-    fontWeight: 'normal',
-    color: '#000000',
-    margin: '0 0 4px 0',
-    letterSpacing: '1px'
-  },
-  subtituloEscuro: {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: '9px',
-    letterSpacing: '1px',
-    color: '#000000',
-    margin: 0,
-    fontWeight: '600'
-  },
-  setaEscura: {
+  tituloCartao: {
     fontSize: '16px',
-    color: '#000000'
-  },
-  tituloClaro: {
-    fontSize: '15px',
-    fontWeight: 'normal',
-    color: '#FFFFFF',
-    margin: '0 0 4px 0',
-    letterSpacing: '1px'
-  },
-  subtituloClaro: {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: '9px',
+    fontWeight: '600',
+    margin: '0 0 6px 0',
     letterSpacing: '1px',
-    color: '#E0E0E0',
-    margin: 0,
-    fontWeight: '600'
-  },
-  subtituloDourado: {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: '9px',
-    letterSpacing: '1px',
-    color: '#C5A059',
-    margin: 0,
-    fontWeight: '600'
-  },
-  setaClara: {
-    fontSize: '16px',
     color: '#FFFFFF'
   },
+  subtituloCartao: {
+    fontSize: '10px',
+    letterSpacing: '2px',
+    color: '#A0A0A0',
+    margin: 0,
+    fontWeight: '600'
+  },
   setaDourada: {
-    fontSize: '16px',
+    fontSize: '20px',
     color: '#C5A059'
   }
 };

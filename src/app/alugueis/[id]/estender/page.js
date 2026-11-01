@@ -2,6 +2,8 @@
 import { useState, use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Input from '../../../../components/Input';
+import Button from '../../../../components/Button';
 
 export default function EstenderAluguel({ params }) {
   const unwrappedParams = use(params);
@@ -42,55 +44,81 @@ export default function EstenderAluguel({ params }) {
 
   return (
     <main style={estilos.recipiente}>
-      <div style={estilos.bordaSuperiorDourada}></div>
-      <div style={estilos.bordaSuperiorFina}></div>
+      <div style={estilos.sobreposicaoConteudo}>
+        <header style={estilos.cabecalhoGlass}>
+          <div style={estilos.linhaTopo}>
+            <Link href="/alugueis" style={estilos.linkVoltar}>← Cancelar</Link>
+          </div>
+          <h1 style={estilos.titulo}>Prorrogar contrato nº {unwrappedParams.id}</h1>
+          <div style={estilos.linhaDecorativa}></div>
+        </header>
 
-      <header style={estilos.cabecalho}>
-        <div style={estilos.linhaTopo}>
-          <Link href="/alugueis" style={estilos.linkVoltar}>&#8592; CANCELAR</Link>
-        </div>
-        <h1 style={estilos.titulo}>Prorrogar Contrato Nº {unwrappedParams.id}</h1>
-        <div style={estilos.linhaDecorativa}></div>
-      </header>
-
-      <section style={estilos.conteudo}>
-        <form onSubmit={submeterFormulario} style={estilos.formulario}>
-          <div style={estilos.grupoEntrada}>
-            <label style={estilos.rotulo}>DIAS ADICIONAIS (1 A 90) *</label>
-            <input 
+        <section style={estilos.conteudo}>
+          <form onSubmit={submeterFormulario} style={estilos.formularioGlass}>
+            <Input 
+              label="Dias adicionais (1 a 90) *" 
               type="number" 
-              min="1" 
-              max="90" 
-              required 
-              style={estilos.entradaTexto} 
               value={dias} 
               onChange={(e) => definirDias(e.target.value)} 
+              required 
             />
-          </div>
 
-          {erro && <span style={estilos.mensagemErro}>{erro}</span>}
-          
-          <button type="submit" style={estilos.botaoAssinar}>CONFIRMAR PRORROGAÇÃO</button>
-        </form>
-      </section>
+            {erro && <span style={estilos.mensagemErro}>{erro}</span>}
+            
+            <Button type="submit">Confirmar prorrogação</Button>
+          </form>
+        </section>
+      </div>
     </main>
   );
 }
 
 const estilos = {
-  recipiente: { minHeight: '100vh', backgroundColor: '#FFFFFF', fontFamily: '"Playfair Display", "Georgia", serif', color: '#000000', margin: 0 },
-  bordaSuperiorDourada: { width: '100%', height: '4px', backgroundColor: '#C5A059' },
-  bordaSuperiorFina: { width: '100%', height: '1px', backgroundColor: '#000000' },
-  cabecalho: { padding: '40px 60px 20px 60px', display: 'flex', flexDirection: 'column', alignItems: 'center' },
-  linhaTopo: { width: '100%', display: 'flex', justifyContent: 'flex-start', marginBottom: '40px' },
-  linkVoltar: { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', fontSize: '11px', letterSpacing: '2px', color: '#000000', textDecoration: 'none', fontWeight: '600' },
-  titulo: { fontSize: '36px', fontWeight: 'normal', letterSpacing: '2px', margin: '0 0 20px 0' },
-  linhaDecorativa: { width: '100px', height: '1px', backgroundColor: '#C5A059', margin: '0 auto' },
-  conteudo: { padding: '40px 60px', maxWidth: '600px', margin: '0 auto', width: '100%' },
-  formulario: { display: 'flex', flexDirection: 'column', gap: '30px', backgroundColor: '#FAF7F2', padding: '50px', border: '1px solid #EAEAEA' },
-  grupoEntrada: { display: 'flex', flexDirection: 'column', gap: '10px' },
-  rotulo: { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', fontSize: '10px', letterSpacing: '2px', color: '#333333', fontWeight: '600' },
-  entradaTexto: { padding: '16px', border: '1px solid #CCCCCC', backgroundColor: '#FFFFFF', fontSize: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', outline: 'none' },
-  botaoAssinar: { backgroundColor: '#000000', color: '#FFFFFF', padding: '20px', fontSize: '12px', letterSpacing: '3px', fontWeight: 'bold', border: 'none', cursor: 'pointer', marginTop: '20px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' },
-  mensagemErro: { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', color: '#D93025', fontSize: '12px', textAlign: 'center', fontWeight: 'bold', letterSpacing: '1px' }
+  recipiente: { 
+    minHeight: '100vh', 
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', 
+    margin: 0,
+    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%231a1a1a\'/%3E%3Crect x=\'100\' width=\'100\' height=\'100\' fill=\'%23242424\'/%3E%3Crect y=\'100\' width=\'100\' height=\'100\' fill=\'%23242424\'/%3E%3Crect x=\'100\' y=\'100\' width=\'100\' height=\'100\' fill=\'%231a1a1a\'/%3E%3Ctext x=\'50\' y=\'75\' font-size=\'65\' text-anchor=\'middle\' fill=\'%23222222\'%3E%E2%99%9E%3C/text%3E%3Ctext x=\'150\' y=\'75\' font-size=\'65\' text-anchor=\'middle\' fill=\'%232c2c2c\'%3E%E2%99%9C%3C/text%3E%3Ctext x=\'50\' y=\'175\' font-size=\'65\' text-anchor=\'middle\' fill=\'%232c2c2c\'%3E%E2%99%9F%3C/text%3E%3Ctext x=\'150\' y=\'175\' font-size=\'65\' text-anchor=\'middle\' fill=\'%23222222\'%3E%E2%99%9B%3C/text%3E%3C/svg%3E")',
+    backgroundSize: '200px 200px',
+    backgroundPosition: 'center',
+    backgroundAttachment: 'fixed',
+  },
+  sobreposicaoConteudo: { 
+    minHeight: '100vh', 
+    display: 'flex', 
+    flexDirection: 'column', 
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.45)', 
+    padding: '40px 20px' 
+  },
+  cabecalhoGlass: { 
+    backgroundColor: 'rgba(255, 255, 255, 0.65)', 
+    backdropFilter: 'blur(32px)', 
+    WebkitBackdropFilter: 'blur(32px)', 
+    padding: '30px 50px', 
+    borderRadius: '16px', 
+    border: '1px solid rgba(255, 255, 255, 0.5)', 
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)', 
+    width: '100%', 
+    maxWidth: '600px',
+    marginBottom: '30px'
+  },
+  linhaTopo: { display: 'flex', justifyContent: 'flex-start', marginBottom: '20px' },
+  linkVoltar: { fontSize: '14px', color: '#111111', textDecoration: 'none', fontWeight: '600' },
+  titulo: { fontSize: '32px', fontWeight: 'bold', margin: '0 0 16px 0', color: '#111111', textAlign: 'center' },
+  linhaDecorativa: { width: '80px', height: '2px', backgroundColor: '#C5A059', margin: '0 auto' },
+  conteudo: { width: '100%', maxWidth: '600px' },
+  formularioGlass: { 
+    display: 'flex', 
+    flexDirection: 'column', 
+    gap: '24px', 
+    backgroundColor: 'rgba(20, 20, 20, 0.70)', 
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    padding: '40px', 
+    borderRadius: '16px',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)' 
+  },
+  mensagemErro: { color: '#ff4d4d', fontSize: '13px', textAlign: 'center', fontWeight: '500' }
 };
