@@ -92,6 +92,81 @@ svg {
   text-align: center;
 }
 
+.cabecalho-modulo {
+  width: min(100%, 800px);
+  margin-bottom: 1.5rem;
+}
+
+.cabecalho-modulo .titulo-pagina {
+  color: #111111;
+  text-align: center;
+}
+
+.cabecalho-modulo .link-voltar {
+  color: #333333;
+}
+
+.cabecalho-modulo .link-voltar:hover,
+.cabecalho-modulo .link-voltar:focus-visible {
+  color: #7a5a20;
+}
+
+.conteudo-modulo {
+  width: min(100%, 800px);
+  margin-inline: auto;
+}
+
+.filtros-alugueis {
+  width: min(100%, 800px);
+  margin: 0 auto 1.5rem;
+  align-items: center;
+}
+
+.filtros-alugueis .grupo-formulario {
+  flex: 1 1 12rem;
+}
+
+.filtros-pagamentos {
+  width: min(100%, 800px);
+  margin: 0 auto 1.5rem;
+  align-items: end;
+}
+
+.filtros-pagamentos .grupo-formulario {
+  flex: 1 1 10rem;
+}
+
+.cabecalho-cartao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.area-texto {
+  min-height: 7.5rem;
+  resize: vertical;
+}
+
+.rotulo-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+}
+
+.checkbox-padrao {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--cor-dourada);
+}
+
+.formulario-estender {
+  max-width: 600px;
+}
+
 .titulo-marca {
   margin: 0 0 0.75rem;
   font-size: clamp(1.65rem, 4vw, 2rem);

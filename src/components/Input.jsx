@@ -9,6 +9,7 @@ export default function Input({
   required = false,
   min,
   max,
+  step,
 }) {
   const generatedId = useId();
 
@@ -29,6 +30,7 @@ export default function Input({
         required={required}
         min={min}
         max={max}
+        step={step}
       />
     </div>
   );
