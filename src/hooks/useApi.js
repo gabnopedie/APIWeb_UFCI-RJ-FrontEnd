@@ -22,7 +22,7 @@ async function lerResposta(response) {
   return body;
 }
 
-export function useApi(endpoint) {
+export function useApi(endpoint, { autoFetch = true } = {}) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -81,8 +81,10 @@ export function useApi(endpoint) {
   }, [endpoint, request]);
 
   useEffect(() => {
-    refetch();
-  }, [refetch]);
+    if (autoFetch) {
+      refetch();
+    }
+  }, [autoFetch, refetch]);
 
   return { data, loading, error, refetch, request };
 }
