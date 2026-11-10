@@ -70,6 +70,95 @@ svg {
   margin-inline: auto;
 }
 
+.pagina-inicial {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  padding: clamp(1.25rem, 5vw, 4rem);
+}
+
+.pagina-inicial .sobreposicao-conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cabecalho-inicial {
+  display: block;
+  width: min(100%, 800px);
+  margin-bottom: clamp(2rem, 6vw, 4rem);
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
+}
+
+.titulo-marca {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.65rem, 4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.subtitulo-marca {
+  display: block;
+  margin-bottom: 1.1rem;
+  color: #333333;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.descricao-inicial {
+  margin: 0;
+  color: #444444;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+
+.grade-modulos {
+  display: grid;
+  width: min(100%, 1000px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1.25rem;
+}
+
+.cartao-modulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 6rem;
+  padding: 1.5rem;
+  text-decoration: none;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.cartao-modulo:hover,
+.cartao-modulo:focus-visible {
+  background: rgba(32, 32, 32, 0.88);
+  border-color: rgba(197, 160, 89, 0.55);
+  transform: translateY(-2px);
+}
+
+.titulo-cartao-modulo,
+.subtitulo-cartao-modulo {
+  display: block;
+}
+
+.titulo-cartao-modulo {
+  margin-bottom: 0.35rem;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.subtitulo-cartao-modulo {
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+}
+
+.seta-dourada {
+  color: var(--cor-dourada);
+  font-size: 1.25rem;
+}
+
 .cabecalho-glass {
   position: relative;
   display: flex;
@@ -139,6 +228,15 @@ svg {
   background: #d3b16b;
   box-shadow: 0 5px 18px rgba(197, 160, 89, 0.2);
   transform: translateY(-1px);
+}
+
+.botao-primario:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.botao-completo {
+  width: 100%;
 }
 
 .titulo-pagina {
