@@ -63,13 +63,12 @@ export default function NovoPagamento() {
     <main className="recipiente">
       <div className="sobreposicao-conteudo">
         <header className="cabecalho-glass cabecalho-modulo">
-          <div className="linha-topo">
+          <div className="textos-cabecalho-modulo">
             <Link className="link-voltar" href="/pagamentos">
               &#8592; Cancelar
             </Link>
+            <h1 className="titulo-pagina">Lançamento financeiro</h1>
           </div>
-          <h1 className="titulo-pagina">Lançamento financeiro</h1>
-          <div className="linha-decorativa" />
         </header>
 
         <section className="conteudo-modulo">

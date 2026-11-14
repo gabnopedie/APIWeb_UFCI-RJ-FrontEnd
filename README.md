@@ -31,6 +31,7 @@ Interface WeB desenvolvida em **Next.js** para o projeto da P2 da disciplina de 
 * **Next.js** (App Router)
 * **React** (Hooks e manipulação de estado local)
 * **CSS Modules / Estilização Nativa**
+* **Three.js** (Renderização do tabuleiro 3D interativo no background)
 * **Fetch API** (Comunicação assíncrona com o backend NestJS)
 
 ---

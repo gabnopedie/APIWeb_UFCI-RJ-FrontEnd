@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import PecaTabuleiro3D from "../components/PecaTabuleiro3D";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,7 +20,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <PecaTabuleiro3D />
+        {children}
+      </body>
     </html>
   );
 }

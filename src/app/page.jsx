@@ -1,5 +1,4 @@
 import Link from "next/link";
-import PecaTabuleiro3D from "../components/PecaTabuleiro3D";
 import { modulos } from "../constants/modulos";
 
 export default function PaginaInicial() {
@@ -7,14 +6,15 @@ export default function PaginaInicial() {
     <main className="pagina-inicial">
       <div className="sobreposicao-conteudo">
         <header className="cabecalho-glass cabecalho-inicial">
-          <h1 className="titulo-marca">
-            Sistema de aluguel de jogos de tabuleiro
-          </h1>
-          <span className="subtitulo-marca">Programação web | UFCI - RJ</span>
-          <PecaTabuleiro3D />
-          <p className="descricao-inicial">
-            Painel de controle e catalogação
-          </p>
+          <div className="textos-iniciais">
+            <span className="subtitulo-marca">Programação Web | UFCI - RJ</span>
+            <h1 className="titulo-marca">
+              Sistema de Aluguel de Jogos de Tabuleiro
+            </h1>
+            <p className="descricao-inicial">
+              Painel de controle e catalogação
+            </p>
+          </div>
         </header>
 
         <nav className="grade-modulos" aria-label="Módulos do sistema">

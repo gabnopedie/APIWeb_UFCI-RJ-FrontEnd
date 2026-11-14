@@ -50,16 +50,15 @@ export default function Alugueis() {
     <main className="recipiente">
       <div className="sobreposicao-conteudo">
         <header className="cabecalho-glass cabecalho-modulo">
-          <div className="linha-topo">
+          <div className="textos-cabecalho-modulo">
             <Link className="link-voltar" href="/">
               &#8592; Painel principal
             </Link>
-            <Link className="botao-novo" href="/alugueis/novo">
-              Novo contrato
-            </Link>
+            <h1 className="titulo-pagina">Contratos de aluguel</h1>
           </div>
-          <h1 className="titulo-pagina">Contratos de aluguel</h1>
-          <div className="linha-decorativa" />
+          <Link className="botao-novo" href="/alugueis/novo">
+            Novo contrato
+          </Link>
         </header>
 
         <FiltroAluguel

@@ -72,13 +72,12 @@ export default function NovoAluguel() {
     <main className="recipiente">
       <div className="sobreposicao-conteudo">
         <header className="cabecalho-glass cabecalho-modulo">
-          <div className="linha-topo">
+          <div className="textos-cabecalho-modulo">
             <Link className="link-voltar" href="/alugueis">
               &#8592; Cancelar operação
             </Link>
+            <h1 className="titulo-pagina">Formalizar contrato</h1>
           </div>
-          <h1 className="titulo-pagina">Formalizar contrato</h1>
-          <div className="linha-decorativa" />
         </header>
 
         <section className="conteudo-modulo">

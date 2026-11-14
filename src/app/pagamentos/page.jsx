@@ -3,9 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useApi } from "../../hooks/useApi";
-import {
-  STATUS_PAGAMENTO,
-} from "../../constants/opcoes";
 import CardPagamento from "../../components/CardPagamento";
 import FiltroPagamento from "../../components/FiltroPagamento";
 
@@ -56,16 +53,15 @@ export default function Pagamentos() {
     <main className="recipiente">
       <div className="sobreposicao-conteudo">
         <header className="cabecalho-glass cabecalho-modulo">
-          <div className="linha-topo">
+          <div className="textos-cabecalho-modulo">
             <Link className="link-voltar" href="/">
               &#8592; Painel principal
             </Link>
-            <Link className="botao-novo" href="/pagamentos/novo">
-              Registrar pagamento
-            </Link>
+            <h1 className="titulo-pagina">Pagamentos</h1>
           </div>
-          <h1 className="titulo-pagina">Gestão financeira</h1>
-          <div className="linha-decorativa" />
+          <Link className="botao-novo" href="/pagamentos/novo">
+            Registrar pagamento
+          </Link>
         </header>
 
         <FiltroPagamento
