@@ -2,15 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Input from "../../components/Input";
 import { useApi } from "../../hooks/useApi";
 import {
-  AcaoPagamento,
-  FormaPagamento,
-  FormaPagamentoLabel,
-  StatusPagamento,
-  StatusPagamentoLabel,
-} from "../../constants/enums";
+  STATUS_PAGAMENTO,
+} from "../../constants/opcoes";
+import CardPagamento from "../../components/CardPagamento";
+import FiltroPagamento from "../../components/FiltroPagamento";
 
 export default function Pagamentos() {
   const [filtros, definirFiltros] = useState({
@@ -71,55 +68,10 @@ export default function Pagamentos() {
           <div className="linha-decorativa" />
         </header>
 
-        <section
-          className="area-filtros-glass filtros-pagamentos"
-          aria-label="Filtros de pagamentos"
-        >
-          <select
-            className="entrada-filtro"
-            aria-label="Filtrar por status"
-            value={filtros.status}
-            onChange={(evento) => atualizarFiltro("status", evento.target.value)}
-          >
-            <option value="">Todos os status</option>
-            {Object.values(StatusPagamento).map((status) => (
-              <option key={status} value={status}>
-                {StatusPagamentoLabel[status]}
-              </option>
-            ))}
-          </select>
-          <select
-            className="entrada-filtro"
-            aria-label="Filtrar por forma de pagamento"
-            value={filtros.forma_pagamento}
-            onChange={(evento) =>
-              atualizarFiltro("forma_pagamento", evento.target.value)
-            }
-          >
-            <option value="">Todas as formas</option>
-            {Object.values(FormaPagamento).map((forma) => (
-              <option key={forma} value={forma}>
-                {FormaPagamentoLabel[forma]}
-              </option>
-            ))}
-          </select>
-          <Input
-            label="Data inicial"
-            type="date"
-            value={filtros.startDate}
-            onChange={(evento) =>
-              atualizarFiltro("startDate", evento.target.value)
-            }
-          />
-          <Input
-            label="Data final"
-            type="date"
-            value={filtros.endDate}
-            onChange={(evento) =>
-              atualizarFiltro("endDate", evento.target.value)
-            }
-          />
-        </section>
+        <FiltroPagamento
+          filtros={filtros}
+          atualizarFiltro={atualizarFiltro}
+        />
 
         <section className="conteudo-modulo">
           {error && <p className="mensagem-erro">{error}</p>}
@@ -133,70 +85,13 @@ export default function Pagamentos() {
 
           <div className="grade-contratos">
             {pagamentos.map((pagamento) => (
-              <article className="cartao-glass" key={pagamento.id}>
-                <div className="cabecalho-cartao">
-                  <span className="numero-contrato">
-                    Recibo nº {pagamento.id}
-                  </span>
-                  <span
-                    className="etiqueta-status"
-                    data-status={pagamento.status}
-                  >
-                    {StatusPagamentoLabel[pagamento.status] ??
-                      String(pagamento.status).toLowerCase()}
-                  </span>
-                </div>
-                <h2 className="nome-jogo">
-                  R$ {Number(pagamento.valor).toFixed(2)}
-                </h2>
-                <p className="detalhe-texto">
-                  Contrato origem: {pagamento.id_aluguel}
-                </p>
-                <p className="detalhe-texto">
-                  Método:{" "}
-                  {FormaPagamentoLabel[pagamento.forma_pagamento] ??
-                    String(pagamento.forma_pagamento).toLowerCase()}
-                </p>
-
-                {pagamento.status === StatusPagamento.PENDENTE && (
-                  <div className="acoes-cartao">
-                    <button
-                      className="botao-acao"
-                      type="button"
-                      disabled={acaoEmAndamento === pagamento.id}
-                      onClick={() =>
-                        alterarStatus(pagamento.id, AcaoPagamento.CONFIRMAR)
-                      }
-                    >
-                      Confirmar
-                    </button>
-                    <button
-                      className="botao-acao-vazado"
-                      type="button"
-                      disabled={acaoEmAndamento === pagamento.id}
-                      onClick={() =>
-                        alterarStatus(pagamento.id, AcaoPagamento.ESTORNAR)
-                      }
-                    >
-                      Estornar
-                    </button>
-                  </div>
-                )}
-                {pagamento.status === StatusPagamento.PAGO && (
-                  <div className="acoes-cartao">
-                    <button
-                      className="botao-acao-vazado"
-                      type="button"
-                      disabled={acaoEmAndamento === pagamento.id}
-                      onClick={() =>
-                        alterarStatus(pagamento.id, AcaoPagamento.ESTORNAR)
-                      }
-                    >
-                      Estornar
-                    </button>
-                  </div>
-                )}
-              </article>
+              <CardPagamento
+                key={pagamento.id}
+                pagamento={pagamento}
+                carregando={acaoEmAndamento === pagamento.id}
+                confirmar={(id) => alterarStatus(id, "confirm")}
+                estornar={(id) => alterarStatus(id, "refund")}
+              />
             ))}
           </div>
         </section>

@@ -4,76 +4,71 @@ import { useCallback, useEffect, useState } from "react";
 
 const API_BASE_URL = "http://localhost:3000";
 
-async function lerResposta(response) {
-  if (response.status === 204) {
-    return null;
-  }
-
-  const body = await response.text();
-  if (!body) {
-    return null;
-  }
-
-  const contentType = response.headers.get("content-type");
-  if (contentType?.includes("application/json")) {
-    return JSON.parse(body);
-  }
-
-  return body;
-}
-
 export function useApi(endpoint, { autoFetch = true } = {}) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const request = useCallback(async (requestEndpoint, options = {}) => {
-    const token =
-      typeof window !== "undefined"
-        ? window.localStorage.getItem("token_ufci")
-        : null;
-    const headers = new Headers(options.headers);
+  const request = useCallback(
+    async (requestEndpoint, options = {}) => {
+      const headers = new Headers(options.headers);
+      const token =
+        typeof window !== "undefined"
+          ? window.localStorage.getItem("token_ufci")
+          : null;
 
-    if (!headers.has("Content-Type")) {
-      headers.set("Content-Type", "application/json");
-    }
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
-    }
+      if (!headers.has("Content-Type")) {
+        headers.set("Content-Type", "application/json");
+      }
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
 
-    const response = await fetch(`${API_BASE_URL}${requestEndpoint}`, {
-      ...options,
-      headers,
-    });
-    const result = await lerResposta(response);
+      const response = await fetch(`${API_BASE_URL}${requestEndpoint}`, {
+        ...options,
+        headers,
+      });
 
-    if (!response.ok) {
-      const message =
-        result &&
-        typeof result === "object" &&
-        "message" in result &&
-        typeof result.message === "string"
-          ? result.message
-          : `Erro na requisição à API (${response.status})`;
-      throw new Error(message);
-    }
+      let resultado = null;
+      if (response.status !== 204) {
+        const texto = await response.text();
+        if (texto) {
+          resultado = response.headers
+            .get("content-type")
+            ?.includes("application/json")
+            ? JSON.parse(texto)
+            : texto;
+        }
+      }
 
-    return result;
-  }, []);
+      if (!response.ok) {
+        const mensagem =
+          resultado &&
+          typeof resultado === "object" &&
+          typeof resultado.message === "string"
+            ? resultado.message
+            : `Erro na requisição à API (${response.status})`;
+        throw new Error(mensagem);
+      }
+
+      return resultado;
+    },
+    [],
+  );
 
   const refetch = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const result = await request(endpoint);
-      setData(result);
-      return result;
-    } catch (requestError) {
-      const message =
-        requestError instanceof Error
-          ? requestError.message
-          : String(requestError);
-      setError(message);
+      const resultado = await request(endpoint);
+      setData(resultado);
+      return resultado;
+    } catch (erroRequisicao) {
+      const mensagem =
+        erroRequisicao instanceof Error
+          ? erroRequisicao.message
+          : String(erroRequisicao);
+      setError(mensagem);
       return null;
     } finally {
       setLoading(false);

@@ -7,9 +7,9 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import { useApi } from "../../../hooks/useApi";
 import {
-  FormaPagamento,
-  FormaPagamentoLabel,
-} from "../../../constants/enums";
+  FORMAS_PAGAMENTO,
+  OPCOES_FORMA_PAGAMENTO,
+} from "../../../constants/opcoes";
 
 export default function NovoPagamento() {
   const roteador = useRouter();
@@ -19,7 +19,7 @@ export default function NovoPagamento() {
   const [dados, definirDados] = useState({
     id_aluguel: "",
     valor: "",
-    forma_pagamento: FormaPagamento.PIX,
+    forma_pagamento: FORMAS_PAGAMENTO.PIX,
   });
 
   function atualizarCampo(campo, valor) {
@@ -111,9 +111,9 @@ export default function NovoPagamento() {
                 }
                 required
               >
-                {Object.values(FormaPagamento).map((forma) => (
-                  <option key={forma} value={forma}>
-                    {FormaPagamentoLabel[forma]}
+                {OPCOES_FORMA_PAGAMENTO.map((opcao) => (
+                  <option key={opcao.valor} value={opcao.valor}>
+                    {opcao.rotulo}
                   </option>
                 ))}
               </select>

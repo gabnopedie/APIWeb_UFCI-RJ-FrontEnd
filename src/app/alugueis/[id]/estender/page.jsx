@@ -6,12 +6,11 @@ import { useRouter } from "next/navigation";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { useApi } from "../../../../hooks/useApi";
-import { AcaoAluguel } from "../../../../constants/enums";
 
 export default function EstenderAluguel({ params }) {
   const { id } = use(params);
   const roteador = useRouter();
-  const { request } = useApi(`/rentals/${id}/${AcaoAluguel.PRORROGAR}`, {
+  const { request } = useApi(`/rentals/${id}/extend`, {
     autoFetch: false,
   });
   const [dias, definirDias] = useState(7);
@@ -29,7 +28,7 @@ export default function EstenderAluguel({ params }) {
 
     definirEnviando(true);
     try {
-      await request(`/rentals/${id}/${AcaoAluguel.PRORROGAR}`, {
+      await request(`/rentals/${id}/extend`, {
         method: "PATCH",
         body: JSON.stringify({ dias: Number.parseInt(dias, 10) }),
       });
