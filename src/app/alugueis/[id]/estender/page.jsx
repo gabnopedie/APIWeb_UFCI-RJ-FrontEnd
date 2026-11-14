@@ -48,13 +48,12 @@ export default function EstenderAluguel({ params }) {
     <main className="recipiente">
       <div className="sobreposicao-conteudo">
         <header className="cabecalho-glass cabecalho-modulo">
-          <div className="linha-topo">
+          <div className="textos-cabecalho-modulo">
             <Link className="link-voltar" href="/alugueis">
               &#8592; Cancelar
             </Link>
+            <h1 className="titulo-pagina">Prorrogar contrato nº {id}</h1>
           </div>
-          <h1 className="titulo-pagina">Prorrogar contrato nº {id}</h1>
-          <div className="linha-decorativa" />
         </header>
 
         <section className="conteudo-modulo">

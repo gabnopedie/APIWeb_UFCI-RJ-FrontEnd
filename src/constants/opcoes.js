@@ -18,6 +18,12 @@ export const STATUS_PAGAMENTO = {
   ESTORNADO: "ESTORNADO",
 };
 
+export const OPCOES_STATUS_PAGAMENTO = [
+  { valor: STATUS_PAGAMENTO.PENDENTE, rotulo: "Pendente" },
+  { valor: STATUS_PAGAMENTO.PAGO, rotulo: "Pago" },
+  { valor: STATUS_PAGAMENTO.ESTORNADO, rotulo: "Estornado" },
+];
+
 export const FORMAS_PAGAMENTO = {
   PIX: "PIX",
   CARTAO_CREDITO: "CARTAO_CREDITO",
