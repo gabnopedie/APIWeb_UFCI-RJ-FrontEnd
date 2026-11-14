@@ -1,37 +1,6 @@
 import Link from "next/link";
-
-const modulos = [
-  {
-    href: "/categorias",
-    titulo: "Categorias",
-    descricao: "Classificação",
-  },
-  {
-    href: "/jogos",
-    titulo: "Jogos do acervo",
-    descricao: "Catálogo",
-  },
-  {
-    href: "/usuarios",
-    titulo: "Usuários",
-    descricao: "Membros registrados",
-  },
-  {
-    href: "/alugueis",
-    titulo: "Aluguéis",
-    descricao: "Contratos ativos",
-  },
-  {
-    href: "/pagamentos",
-    titulo: "Pagamentos",
-    descricao: "Gestão financeira",
-  },
-  {
-    href: "/reviews",
-    titulo: "Avaliações",
-    descricao: "Opiniões da comunidade",
-  },
-];
+import PecaTabuleiro3D from "../components/PecaTabuleiro3D";
+import { modulos } from "../constants/modulos";
 
 export default function PaginaInicial() {
   return (
@@ -42,6 +11,7 @@ export default function PaginaInicial() {
             Sistema de aluguel de jogos de tabuleiro
           </h1>
           <span className="subtitulo-marca">Programação web | UFCI - RJ</span>
+          <PecaTabuleiro3D />
           <p className="descricao-inicial">
             Painel de controle e catalogação
           </p>
