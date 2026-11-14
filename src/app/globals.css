@@ -1,10 +1,11 @@
 :root {
-  color-scheme: dark;
-  --cor-dourada: #c5a059;
-  --cor-texto: #ffffff;
-  --cor-texto-suave: #cccccc;
-  --cor-borda: rgba(255, 255, 255, 0.1);
-  --vidro-escuro: rgba(20, 20, 20, 0.72);
+  color-scheme: light;
+  --cor-dourada: #b8860b;
+  --cor-dourada-suave: #c5a059;
+  --cor-texto: #1d1d1f;
+  --cor-texto-suave: #515154;
+  --cor-borda: rgba(29, 29, 31, 0.12);
+  --vidro-claro: rgba(255, 255, 255, 0.78);
 }
 
 *,
@@ -23,10 +24,10 @@ body {
   margin: 0;
   color: var(--cor-texto);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: #1a1a1a;
+  background-color: #f5f3ef;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231a1a1a'/%3E%3Cpath fill='%23242424' d='M0 0h100v100H0zm100 100h100v100H100z'/%3E%3Cg fill='%23222222'%3E%3Cpath d='M47 29c-5 0-9 4-9 9 0 3 2 6 4 7l-4 9h24l-4-9c3-2 4-4 4-7 0-5-4-9-9-9-2 0-4 1-6 3-2-2-4-3-6-3zM34 59h32v5H34zm-3 8h38v5H31z'/%3E%3C/g%3E%3Cg fill='%232c2c2c'%3E%3Cpath d='M147 129c-5 0-9 4-9 9 0 3 2 6 4 7l-4 9h24l-4-9c3-2 4-4 4-7 0-5-4-9-9-9-2 0-4 1-6 3-2-2-4-3-6-3zM134 159h32v5h-32zm-3 8h38v5h-38z'/%3E%3C/g%3E%3C/svg%3E");
+    linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f5f3ef'/%3E%3Cpath fill='%23ebe6dc' d='M0 0h100v100H0zm100 100h100v100H100z'/%3E%3Cg fill='%23e2dcd0'%3E%3Cpath d='M47 29c-5 0-9 4-9 9 0 3 2 6 4 7l-4 9h24l-4-9c3-2 4-4 4-7 0-5-4-9-9-9-2 0-4 1-6 3-2-2-4-3-6-3zM34 59h32v5H34zm-3 8h38v5H31z'/%3E%3Cpath d='M147 129c-5 0-9 4-9 9 0 3 2 6 4 7l-4 9h24l-4-9c3-2 4-4 4-7 0-5-4-9-9-9-2 0-4 1-6 3-2-2-4-3-6-3zM134 159h32v5h-32zm-3 8h38v5h-38z'/%3E%3C/g%3E%3C/svg%3E");
   background-size: auto, 200px 200px;
   background-attachment: fixed, fixed;
 }
@@ -98,17 +99,17 @@ svg {
 }
 
 .cabecalho-modulo .titulo-pagina {
-  color: #111111;
+  color: var(--cor-texto);
   text-align: center;
 }
 
 .cabecalho-modulo .link-voltar {
-  color: #333333;
+  color: var(--cor-texto-suave);
 }
 
 .cabecalho-modulo .link-voltar:hover,
 .cabecalho-modulo .link-voltar:focus-visible {
-  color: #7a5a20;
+  color: var(--cor-dourada);
 }
 
 .conteudo-modulo {
@@ -177,14 +178,14 @@ svg {
 .subtitulo-marca {
   display: block;
   margin-bottom: 1.1rem;
-  color: #333333;
+  color: var(--cor-texto-suave);
   font-size: 0.85rem;
   font-weight: 600;
 }
 
 .descricao-inicial {
   margin: 0;
-  color: #444444;
+  color: var(--cor-texto-suave);
   font-size: clamp(1rem, 2.5vw, 1.25rem);
 }
 
@@ -208,8 +209,8 @@ svg {
 
 .cartao-modulo:hover,
 .cartao-modulo:focus-visible {
-  background: rgba(32, 32, 32, 0.88);
-  border-color: rgba(197, 160, 89, 0.55);
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(184, 134, 11, 0.55);
   transform: translateY(-2px);
 }
 
@@ -242,21 +243,23 @@ svg {
   gap: 1.5rem;
   padding: 1.25rem clamp(1rem, 3vw, 2rem);
   overflow: hidden;
-  color: #111111;
-  background: rgba(255, 255, 255, 0.65);
-  -webkit-backdrop-filter: blur(32px);
-  backdrop-filter: blur(32px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: var(--cor-texto);
+  background: var(--vidro-claro);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 16px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 12px 32px rgba(20, 20, 20, 0.07);
 }
 
 .cabecalho-glass::after {
   position: absolute;
-  inset: auto 0 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   height: 3px;
   content: "";
-  background: var(--cor-dourada);
+  background: var(--cor-dourada-suave);
 }
 
 .linha-topo {
@@ -288,7 +291,7 @@ svg {
   justify-content: center;
   min-height: 2.75rem;
   padding: 0.7rem 1.1rem;
-  color: #17130b;
+  color: #1d1d1f;
   font-weight: 650;
   text-align: center;
   text-decoration: none;
@@ -300,8 +303,8 @@ svg {
 
 .botao-novo:hover,
 .botao-primario:hover {
-  background: #d3b16b;
-  box-shadow: 0 5px 18px rgba(197, 160, 89, 0.2);
+  background: #c5a059;
+  box-shadow: 0 5px 18px rgba(184, 134, 11, 0.2);
   transform: translateY(-1px);
 }
 
@@ -335,12 +338,12 @@ svg {
 .cartao-glass,
 .formulario-glass {
   color: var(--cor-texto);
-  background: var(--vidro-escuro);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--cor-borda);
-  border-radius: 12px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+  background: var(--vidro-claro);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(20, 20, 20, 0.07);
 }
 
 .area-filtros-glass {
@@ -359,8 +362,8 @@ svg {
   min-height: 2.75rem;
   padding: 0.7rem 0.85rem;
   color: var(--cor-texto);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #d2d2d7;
   border-radius: 8px;
   outline: none;
   transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
@@ -373,20 +376,20 @@ svg {
 
 .entrada-filtro:focus,
 .input-padrao:focus {
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.98);
   border-color: var(--cor-dourada);
-  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.18);
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.18);
 }
 
 .entrada-filtro::placeholder,
 .input-padrao::placeholder {
-  color: #999999;
+  color: #737378;
 }
 
 .entrada-filtro option,
 .input-padrao option {
-  color: #ffffff;
-  background: #202020;
+  color: var(--cor-texto);
+  background: #ffffff;
 }
 
 .grade-contratos {
@@ -419,26 +422,26 @@ svg {
   width: fit-content;
   min-height: 1.7rem;
   padding: 0.25rem 0.65rem;
-  color: #ead9b5;
+  color: #795b15;
   font-size: 0.8rem;
   font-weight: 600;
-  background: rgba(197, 160, 89, 0.14);
-  border: 1px solid rgba(197, 160, 89, 0.35);
+  background: rgba(197, 160, 89, 0.16);
+  border: 1px solid rgba(184, 134, 11, 0.35);
   border-radius: 999px;
 }
 
 .etiqueta-status[data-status="PAGO"],
 .etiqueta-status[data-status="CONCLUIDO"] {
-  color: #a7e2bb;
-  background: rgba(67, 160, 100, 0.14);
-  border-color: rgba(100, 190, 130, 0.3);
+  color: #24633b;
+  background: rgba(67, 160, 100, 0.12);
+  border-color: rgba(100, 190, 130, 0.35);
 }
 
 .etiqueta-status[data-status="ATRASADO"],
 .etiqueta-status[data-status="CANCELADO"],
 .etiqueta-status[data-status="ESTORNADO"] {
-  color: #f0aaaa;
-  background: rgba(190, 65, 65, 0.14);
+  color: #8d2929;
+  background: rgba(190, 65, 65, 0.1);
   border-color: rgba(220, 100, 100, 0.3);
 }
 
@@ -458,31 +461,31 @@ svg {
 }
 
 .botao-acao {
-  color: #15110a;
+  color: #1d1d1f;
   background: var(--cor-dourada);
   border-color: var(--cor-dourada);
 }
 
 .botao-acao:hover,
 .botao-acao-dourado:hover {
-  background: #d3b16b;
-  border-color: #d3b16b;
+  background: #c5a059;
+  border-color: #c5a059;
 }
 
 .botao-acao-vazado {
   color: var(--cor-texto-suave);
   background: transparent;
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: #d2d2d7;
 }
 
 .botao-acao-vazado:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--cor-texto);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(184, 134, 11, 0.55);
 }
 
 .botao-acao-dourado {
-  color: #15110a;
+  color: #1d1d1f;
   background: var(--cor-dourada);
   border-color: var(--cor-dourada);
 }
@@ -500,17 +503,17 @@ svg {
 
 .mensagem-erro {
   padding: 0.85rem 1rem;
-  color: #ffc2c2;
-  background: rgba(150, 35, 35, 0.2);
-  border: 1px solid rgba(240, 120, 120, 0.3);
+  color: #8d2929;
+  background: rgba(190, 65, 65, 0.1);
+  border: 1px solid rgba(220, 100, 100, 0.3);
   border-radius: 8px;
 }
 
 .mensagem-sucesso {
   padding: 0.85rem 1rem;
-  color: #b8edc8;
-  background: rgba(35, 120, 65, 0.18);
-  border: 1px solid rgba(110, 205, 140, 0.3);
+  color: #24633b;
+  background: rgba(35, 120, 65, 0.1);
+  border: 1px solid rgba(110, 205, 140, 0.35);
   border-radius: 8px;
 }
 
