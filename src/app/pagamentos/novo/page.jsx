@@ -5,15 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
-import { useApi } from "../../../hooks/useApi";
 import {
   FORMAS_PAGAMENTO,
   OPCOES_FORMA_PAGAMENTO,
 } from "../../../constants/opcoes";
+import { criarPagamento } from "../../../services/pagamentoService";
 
 export default function NovoPagamento() {
   const roteador = useRouter();
-  const { request } = useApi("/payments", { autoFetch: false });
   const [erro, definirErro] = useState("");
   const [enviando, definirEnviando] = useState(false);
   const [dados, definirDados] = useState({
@@ -26,33 +25,39 @@ export default function NovoPagamento() {
     definirDados((anteriores) => ({ ...anteriores, [campo]: valor }));
   }
 
+  function validarFormulario() {
+    if (!dados.id_aluguel || !dados.valor || !dados.forma_pagamento) {
+      return "Preencha todos os campos obrigatórios.";
+    }
+    if (Number(dados.id_aluguel) <= 0) {
+      return "O ID do aluguel deve ser maior que zero.";
+    }
+    if (Number(dados.valor) <= 0 || Number.isNaN(Number(dados.valor))) {
+      return "O valor do pagamento deve ser maior que zero.";
+    }
+    return "";
+  }
+
   async function submeterFormulario(evento) {
     evento.preventDefault();
-    definirErro("");
-
-    if (!window.localStorage.getItem("token_ufci")) {
-      roteador.push("/login");
+    const mensagemValidacao = validarFormulario();
+    definirErro(mensagemValidacao);
+    if (mensagemValidacao) {
       return;
     }
 
-    const cargaDeDados = {
-      id_aluguel: Number.parseInt(dados.id_aluguel, 10),
-      valor: Number.parseFloat(dados.valor),
-      forma_pagamento: dados.forma_pagamento,
-    };
-
     definirEnviando(true);
     try {
-      await request("/payments", {
-        method: "POST",
-        body: JSON.stringify(cargaDeDados),
-      });
+      await criarPagamento(dados);
       roteador.push("/pagamentos");
-    } catch (requestError) {
+    } catch (erroApi) {
+      const status = erroApi.response?.status;
       definirErro(
-        requestError instanceof Error
-          ? requestError.message
-          : "Falha ao registrar o pagamento.",
+        status
+          ? `A API retornou erro ${status}: ${
+              erroApi.response.data?.message || erroApi.message
+            }`
+          : erroApi.message || "Falha ao registrar o pagamento.",
       );
     } finally {
       definirEnviando(false);
@@ -72,10 +77,7 @@ export default function NovoPagamento() {
         </header>
 
         <section className="conteudo-modulo">
-          <form
-            className="formulario-glass"
-            onSubmit={submeterFormulario}
-          >
+          <form className="formulario-glass" onSubmit={submeterFormulario}>
             <Input
               label="Nº do contrato (ID do aluguel) *"
               type="number"

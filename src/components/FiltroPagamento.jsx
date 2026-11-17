@@ -3,6 +3,7 @@ import {
   OPCOES_FORMA_PAGAMENTO,
   OPCOES_STATUS_PAGAMENTO,
 } from "../constants/opcoes";
+import StatusBadge from "./StatusBadge";
 
 export default function FiltroPagamento({ filtros, atualizarFiltro }) {
   return (
@@ -10,6 +11,9 @@ export default function FiltroPagamento({ filtros, atualizarFiltro }) {
       className="area-filtros-glass filtros-pagamentos"
       aria-label="Filtros de pagamentos"
     >
+      {filtros.status && (
+        <StatusBadge status={filtros.status} tipo="pagamento" />
+      )}
       <select
         className="entrada-filtro"
         aria-label="Filtrar por status"

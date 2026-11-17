@@ -1,5 +1,6 @@
 import Input from "./Input";
 import { OPCOES_STATUS_ALUGUEL } from "../constants/opcoes";
+import StatusBadge from "./StatusBadge";
 
 export default function FiltroAluguel({ filtros, atualizarFiltro }) {
   return (
@@ -7,6 +8,9 @@ export default function FiltroAluguel({ filtros, atualizarFiltro }) {
       className="area-filtros-glass filtros-alugueis"
       aria-label="Filtros de contratos"
     >
+      {filtros.status && (
+        <StatusBadge status={filtros.status} tipo="aluguel" />
+      )}
       <select
         className="entrada-filtro"
         aria-label="Filtrar por status"

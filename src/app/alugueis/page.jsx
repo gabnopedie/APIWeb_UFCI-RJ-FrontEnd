@@ -1,11 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useApi } from "../../hooks/useApi";
 import CardAluguel from "../../components/CardAluguel";
+import ConfirmDialog from "../../components/ConfirmDialog";
 import FiltroAluguel from "../../components/FiltroAluguel";
-import { STATUS_ALUGUEL } from "../../constants/opcoes";
+import StatusBadge from "../../components/StatusBadge";
+import TabelaPaginada from "../../components/TabelaPaginada";
+import {
+  excluirAluguel,
+  listarAlugueis,
+} from "../../services/aluguelService";
+
+const itensPorPagina = 7;
 
 export default function Alugueis() {
   const [filtros, definirFiltros] = useState({
@@ -13,38 +20,109 @@ export default function Alugueis() {
     id_usuario: "",
     id_jogo: "",
   });
-  const [erroAcao, definirErroAcao] = useState("");
-  const [acaoEmAndamento, definirAcaoEmAndamento] = useState(null);
+  const [alugueis, definirAlugueis] = useState([]);
+  const [carregando, definirCarregando] = useState(true);
+  const [erro, definirErro] = useState(null);
+  const [termoBusca, definirTermoBusca] = useState("");
+  const [paginaAtual, definirPaginaAtual] = useState(1);
+  const [aluguelSelecionado, definirAluguelSelecionado] = useState(null);
+  const [aluguelParaExcluir, definirAluguelParaExcluir] = useState(null);
+  const [acaoEmAndamento, definirAcaoEmAndamento] = useState(false);
 
-  const parametros = new URLSearchParams();
-  if (filtros.status) parametros.append("status", filtros.status);
-  if (filtros.id_usuario) parametros.append("id_usuario", filtros.id_usuario);
-  if (filtros.id_jogo) parametros.append("id_jogo", filtros.id_jogo);
+  async function carregarAlugueis() {
+    definirCarregando(true);
+    definirErro(null);
+    try {
+      const resultado = await listarAlugueis(filtros);
+      definirAlugueis(resultado);
+    } catch (erroApi) {
+      const status = erroApi.response?.status;
+      definirErro({
+        status,
+        message:
+          status === 400
+            ? "Os filtros enviados são inválidos."
+            : status === 404
+              ? "Nenhum aluguel foi encontrado."
+              : status === 500
+                ? "O servidor encontrou um erro ao carregar os aluguéis."
+                : erroApi.message || "Não foi possível carregar os aluguéis.",
+      });
+    } finally {
+      definirCarregando(false);
+    }
+  }
 
-  const endpoint = `/rentals?${parametros.toString()}`;
-  const { data: respostaApi, loading, error, refetch, request } = useApi(endpoint);
-  const alugueis = respostaApi?.data || [];
+  useEffect(() => {
+    carregarAlugueis();
+  }, [filtros]);
 
   function atualizarFiltro(campo, valor) {
     definirFiltros((anterior) => ({ ...anterior, [campo]: valor }));
+    definirPaginaAtual(1);
   }
 
-  async function alterarStatus(id, acao) {
-    definirErroAcao("");
-    definirAcaoEmAndamento(id);
+  const termo = termoBusca.trim().toLowerCase();
+  const resultados = alugueis.filter((aluguel) =>
+    [
+      aluguel.id,
+      aluguel.jogoNome,
+      aluguel.clienteNome,
+      aluguel.status,
+    ].some((valor) => String(valor || "").toLowerCase().includes(termo)),
+  );
+  const totalPaginas = Math.max(1, Math.ceil(resultados.length / itensPorPagina));
+  const dadosPagina = resultados.slice(
+    (paginaAtual - 1) * itensPorPagina,
+    paginaAtual * itensPorPagina,
+  );
+
+  async function confirmarExclusao() {
+    if (!aluguelParaExcluir) {
+      return;
+    }
+    definirAcaoEmAndamento(true);
     try {
-      await request(`/rentals/${id}/${acao}`, { method: "PATCH" });
-      await refetch();
-    } catch (requestError) {
-      definirErroAcao(
-        requestError instanceof Error
-          ? requestError.message
-          : "Não foi possível atualizar o contrato.",
-      );
+      await excluirAluguel(aluguelParaExcluir.id);
+      definirAluguelParaExcluir(null);
+      if (aluguelSelecionado?.id === aluguelParaExcluir.id) {
+        definirAluguelSelecionado(null);
+      }
+      await carregarAlugueis();
+    } catch (erroApi) {
+      const status = erroApi.response?.status;
+      definirErro({
+        status,
+        message:
+          status === 400
+            ? "A solicitação de exclusão do aluguel é inválida."
+            : status === 404
+              ? "O aluguel não existe mais."
+              : status === 500
+                ? "O servidor não conseguiu excluir o aluguel."
+                : erroApi.message || "Não foi possível excluir o aluguel.",
+      });
+      definirAluguelParaExcluir(null);
     } finally {
-      definirAcaoEmAndamento(null);
+      definirAcaoEmAndamento(false);
     }
   }
+
+  const colunas = [
+    { chave: "id", titulo: "Nº" },
+    { chave: "jogoNome", titulo: "Jogo" },
+    { chave: "clienteNome", titulo: "Cliente" },
+    { chave: "dataInicioFormatada", titulo: "Início" },
+    { chave: "dataFimFormatada", titulo: "Devolução" },
+    { chave: "valorTotalFormatado", titulo: "Valor" },
+    {
+      chave: "status",
+      titulo: "Status",
+      renderizar: (aluguel) => (
+        <StatusBadge status={aluguel.status} tipo="aluguel" />
+      ),
+    },
+  ];
 
   return (
     <main className="recipiente">
@@ -61,32 +139,57 @@ export default function Alugueis() {
           </Link>
         </header>
 
-        <FiltroAluguel
-          filtros={filtros}
-          atualizarFiltro={atualizarFiltro}
-        />
-
+        <FiltroAluguel filtros={filtros} atualizarFiltro={atualizarFiltro} />
         <section className="conteudo-modulo">
-          {error && <p className="mensagem-erro">{error}</p>}
-          {erroAcao && <p className="mensagem-erro">{erroAcao}</p>}
-          {loading && <p className="texto-vazio">Carregando contratos...</p>}
-          {!loading && !error && alugueis.length === 0 && (
-            <p className="texto-vazio">Nenhum contrato localizado.</p>
-          )}
-
-          <div className="grade-contratos">
-            {alugueis.map((aluguel) => (
+          <TabelaPaginada
+            colunas={colunas}
+            dados={dadosPagina}
+            carregando={carregando || acaoEmAndamento}
+            erro={erro}
+            termoBusca={termoBusca}
+            aoMudarBusca={(valor) => {
+              definirTermoBusca(valor);
+              definirPaginaAtual(1);
+            }}
+            paginaAtual={paginaAtual}
+            totalPaginas={totalPaginas}
+            aoMudarPagina={definirPaginaAtual}
+            renderizarAcoes={(aluguel) => (
+              <div className="acoes-cartao">
+                <button
+                  className="botao-acao-vazado"
+                  type="button"
+                  onClick={() => definirAluguelSelecionado(aluguel)}
+                >
+                  Detalhes
+                </button>
+                <button
+                  className="botao-acao-vazado"
+                  type="button"
+                  onClick={() => definirAluguelParaExcluir(aluguel)}
+                >
+                  Excluir
+                </button>
+              </div>
+            )}
+          />
+          {aluguelSelecionado && (
+            <div className="grade-contratos">
               <CardAluguel
-                key={aluguel.id}
-                aluguel={aluguel}
-                carregando={acaoEmAndamento === aluguel.id}
-                devolver={(id) => alterarStatus(id, "return")}
-                cancelar={(id) => alterarStatus(id, "cancel")}
+                aluguel={aluguelSelecionado}
+                aoExcluir={() => definirAluguelParaExcluir(aluguelSelecionado)}
               />
-            ))}
-          </div>
+            </div>
+          )}
         </section>
       </div>
+      <ConfirmDialog
+        aberto={Boolean(aluguelParaExcluir)}
+        titulo="Excluir aluguel"
+        mensagem="Deseja realmente excluir este registro?"
+        aoConfirmar={confirmarExclusao}
+        aoCancelar={() => definirAluguelParaExcluir(null)}
+      />
     </main>
   );
 }

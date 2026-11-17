@@ -5,39 +5,46 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
-import { useApi } from "../../../../hooks/useApi";
+import { estenderAluguel } from "../../../../services/aluguelService";
 
 export default function EstenderAluguel({ params }) {
   const { id } = use(params);
   const roteador = useRouter();
-  const { request } = useApi(`/rentals/${id}/extend`, {
-    autoFetch: false,
-  });
   const [dias, definirDias] = useState(7);
   const [erro, definirErro] = useState("");
   const [enviando, definirEnviando] = useState(false);
 
+  function validarFormulario() {
+    const quantidadeDias = Number(dias);
+    if (!dias || Number.isNaN(quantidadeDias)) {
+      return "Informe a quantidade de dias adicionais.";
+    }
+    if (quantidadeDias <= 0 || quantidadeDias > 90) {
+      return "A prorrogação deve ser de 1 a 90 dias.";
+    }
+    return "";
+  }
+
   async function submeterFormulario(evento) {
     evento.preventDefault();
-    definirErro("");
-
-    if (!window.localStorage.getItem("token_ufci")) {
-      roteador.push("/login");
+    const mensagemValidacao = validarFormulario();
+    definirErro(mensagemValidacao);
+    if (mensagemValidacao) {
       return;
     }
 
     definirEnviando(true);
     try {
-      await request(`/rentals/${id}/extend`, {
-        method: "PATCH",
-        body: JSON.stringify({ dias: Number.parseInt(dias, 10) }),
-      });
+      await estenderAluguel(id, { dias: Number(dias) });
       roteador.push("/alugueis");
-    } catch (requestError) {
+    } catch (erroApi) {
+      const status = erroApi.response?.status;
       definirErro(
-        requestError instanceof Error
-          ? requestError.message
-          : "Falha ao prorrogar o prazo.",
+        status
+          ? `A API retornou erro ${status}: ${
+              erroApi.response.data?.message || erroApi.message
+            }`
+          : erroApi.message || "Falha ao prorrogar o prazo.",
       );
     } finally {
       definirEnviando(false);

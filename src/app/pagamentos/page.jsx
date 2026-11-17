@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useApi } from "../../hooks/useApi";
 import CardPagamento from "../../components/CardPagamento";
+import ConfirmDialog from "../../components/ConfirmDialog";
 import FiltroPagamento from "../../components/FiltroPagamento";
+import StatusBadge from "../../components/StatusBadge";
+import TabelaPaginada from "../../components/TabelaPaginada";
+import {
+  atualizarStatusPagamento,
+  excluirPagamento,
+  listarPagamentos,
+} from "../../services/pagamentoService";
+
+const itensPorPagina = 7;
 
 export default function Pagamentos() {
   const [filtros, definirFiltros] = useState({
@@ -13,41 +22,115 @@ export default function Pagamentos() {
     startDate: "",
     endDate: "",
   });
-  const [erroAcao, definirErroAcao] = useState("");
-  const [acaoEmAndamento, definirAcaoEmAndamento] = useState(null);
+  const [pagamentos, definirPagamentos] = useState([]);
+  const [carregando, definirCarregando] = useState(true);
+  const [erro, definirErro] = useState(null);
+  const [termoBusca, definirTermoBusca] = useState("");
+  const [paginaAtual, definirPaginaAtual] = useState(1);
+  const [pagamentoSelecionado, definirPagamentoSelecionado] = useState(null);
+  const [confirmacao, definirConfirmacao] = useState(null);
+  const [acaoEmAndamento, definirAcaoEmAndamento] = useState(false);
 
-  const parametros = new URLSearchParams();
-  if (filtros.status) parametros.append("status", filtros.status);
-  if (filtros.forma_pagamento) {
-    parametros.append("forma_pagamento", filtros.forma_pagamento);
+  async function carregarPagamentos() {
+    definirCarregando(true);
+    definirErro(null);
+    try {
+      const resultado = await listarPagamentos(filtros);
+      definirPagamentos(resultado);
+    } catch (erroApi) {
+      const status = erroApi.response?.status;
+      definirErro({
+        status,
+        message:
+          status === 400
+            ? "Os filtros enviados são inválidos."
+            : status === 404
+              ? "Nenhum pagamento foi encontrado."
+              : status === 500
+                ? "O servidor encontrou um erro ao carregar os pagamentos."
+                : erroApi.message || "Não foi possível carregar os pagamentos.",
+      });
+    } finally {
+      definirCarregando(false);
+    }
   }
-  if (filtros.startDate) parametros.append("startDate", filtros.startDate);
-  if (filtros.endDate) parametros.append("endDate", filtros.endDate);
 
-  const endpoint = `/payments?${parametros.toString()}`;
-  const { data: respostaApi, loading, error, refetch, request } = useApi(endpoint);
-  const pagamentos = respostaApi?.data || [];
+  useEffect(() => {
+    carregarPagamentos();
+  }, [filtros]);
 
   function atualizarFiltro(campo, valor) {
     definirFiltros((anterior) => ({ ...anterior, [campo]: valor }));
+    definirPaginaAtual(1);
   }
 
-  async function alterarStatus(id, acao) {
-    definirErroAcao("");
-    definirAcaoEmAndamento(id);
+  const termo = termoBusca.trim().toLowerCase();
+  const resultados = pagamentos.filter((pagamento) =>
+    [
+      pagamento.id,
+      pagamento.aluguelId,
+      pagamento.metodo,
+      pagamento.status,
+    ].some((valor) => String(valor || "").toLowerCase().includes(termo)),
+  );
+  const totalPaginas = Math.max(1, Math.ceil(resultados.length / itensPorPagina));
+  const dadosPagina = resultados.slice(
+    (paginaAtual - 1) * itensPorPagina,
+    paginaAtual * itensPorPagina,
+  );
+
+  async function executarAcaoConfirmada() {
+    if (!confirmacao) {
+      return;
+    }
+    definirAcaoEmAndamento(true);
     try {
-      await request(`/payments/${id}/${acao}`, { method: "PATCH" });
-      await refetch();
-    } catch (requestError) {
-      definirErroAcao(
-        requestError instanceof Error
-          ? requestError.message
-          : "Não foi possível atualizar o pagamento.",
-      );
+      if (confirmacao.acao === "excluir") {
+        await excluirPagamento(confirmacao.pagamento.id);
+        if (pagamentoSelecionado?.id === confirmacao.pagamento.id) {
+          definirPagamentoSelecionado(null);
+        }
+      } else {
+        await atualizarStatusPagamento(
+          confirmacao.pagamento.id,
+          confirmacao.status,
+        );
+      }
+      definirConfirmacao(null);
+      await carregarPagamentos();
+    } catch (erroApi) {
+      const status = erroApi.response?.status;
+      definirErro({
+        status,
+        message:
+          status === 400
+            ? "A solicitação para alterar o pagamento é inválida."
+            : status === 404
+              ? "O pagamento não existe mais."
+              : status === 500
+                ? "O servidor não conseguiu atualizar o pagamento."
+                : erroApi.message || "Não foi possível atualizar o pagamento.",
+      });
+      definirConfirmacao(null);
     } finally {
-      definirAcaoEmAndamento(null);
+      definirAcaoEmAndamento(false);
     }
   }
+
+  const colunas = [
+    { chave: "id", titulo: "Nº" },
+    { chave: "aluguelId", titulo: "Aluguel" },
+    { chave: "valorFormatado", titulo: "Valor" },
+    { chave: "metodo", titulo: "Método" },
+    { chave: "dataPagamentoFormatada", titulo: "Data" },
+    {
+      chave: "status",
+      titulo: "Status",
+      renderizar: (pagamento) => (
+        <StatusBadge status={pagamento.status} tipo="pagamento" />
+      ),
+    },
+  ];
 
   return (
     <main className="recipiente">
@@ -64,34 +147,106 @@ export default function Pagamentos() {
           </Link>
         </header>
 
-        <FiltroPagamento
-          filtros={filtros}
-          atualizarFiltro={atualizarFiltro}
-        />
-
+        <FiltroPagamento filtros={filtros} atualizarFiltro={atualizarFiltro} />
         <section className="conteudo-modulo">
-          {error && <p className="mensagem-erro">{error}</p>}
-          {erroAcao && <p className="mensagem-erro">{erroAcao}</p>}
-          {loading && <p className="texto-vazio">Carregando pagamentos...</p>}
-          {!loading && !error && pagamentos.length === 0 && (
-            <p className="texto-vazio">
-              Nenhum registro financeiro localizado.
-            </p>
-          )}
-
-          <div className="grade-contratos">
-            {pagamentos.map((pagamento) => (
+          <TabelaPaginada
+            colunas={colunas}
+            dados={dadosPagina}
+            carregando={carregando || acaoEmAndamento}
+            erro={erro}
+            termoBusca={termoBusca}
+            aoMudarBusca={(valor) => {
+              definirTermoBusca(valor);
+              definirPaginaAtual(1);
+            }}
+            paginaAtual={paginaAtual}
+            totalPaginas={totalPaginas}
+            aoMudarPagina={definirPaginaAtual}
+            renderizarAcoes={(pagamento) => (
+              <div className="acoes-cartao">
+                <button
+                  className="botao-acao-vazado"
+                  type="button"
+                  onClick={() => definirPagamentoSelecionado(pagamento)}
+                >
+                  Detalhes
+                </button>
+                {pagamento.status === "PENDENTE" && (
+                  <button
+                    className="botao-acao"
+                    type="button"
+                    onClick={() =>
+                      definirConfirmacao({
+                        acao: "status",
+                        status: "PAGO",
+                        pagamento,
+                      })
+                    }
+                  >
+                    Confirmar
+                  </button>
+                )}
+                {pagamento.status === "PAGO" && (
+                  <button
+                    className="botao-acao-vazado"
+                    type="button"
+                    onClick={() =>
+                      definirConfirmacao({
+                        acao: "status",
+                        status: "ESTORNADO",
+                        pagamento,
+                      })
+                    }
+                  >
+                    Estornar
+                  </button>
+                )}
+                <button
+                  className="botao-acao-vazado"
+                  type="button"
+                  onClick={() =>
+                    definirConfirmacao({ acao: "excluir", pagamento })
+                  }
+                >
+                  Excluir
+                </button>
+              </div>
+            )}
+          />
+          {pagamentoSelecionado && (
+            <div className="grade-contratos">
               <CardPagamento
-                key={pagamento.id}
-                pagamento={pagamento}
-                carregando={acaoEmAndamento === pagamento.id}
-                confirmar={(id) => alterarStatus(id, "confirm")}
-                estornar={(id) => alterarStatus(id, "refund")}
+                pagamento={pagamentoSelecionado}
+                aoExcluir={() =>
+                  definirConfirmacao({
+                    acao: "excluir",
+                    pagamento: pagamentoSelecionado,
+                  })
+                }
               />
-            ))}
-          </div>
+            </div>
+          )}
         </section>
       </div>
+      <ConfirmDialog
+        aberto={Boolean(confirmacao)}
+        titulo={
+          confirmacao?.acao === "excluir"
+            ? "Excluir pagamento"
+            : confirmacao?.status === "PAGO"
+              ? "Confirmar pagamento"
+              : "Estornar pagamento"
+        }
+        mensagem={
+          confirmacao?.acao === "excluir"
+            ? "Deseja realmente excluir este registro?"
+            : confirmacao?.status === "PAGO"
+              ? "Deseja confirmar este pagamento?"
+              : "Deseja realmente estornar este pagamento?"
+        }
+        aoConfirmar={executarAcaoConfirmada}
+        aoCancelar={() => definirConfirmacao(null)}
+      />
     </main>
   );
 }

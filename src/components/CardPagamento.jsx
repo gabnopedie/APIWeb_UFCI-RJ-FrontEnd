@@ -1,69 +1,23 @@
-import {
-  OPCOES_FORMA_PAGAMENTO,
-  OPCOES_STATUS_PAGAMENTO,
-  STATUS_PAGAMENTO,
-} from "../constants/opcoes";
+import StatusBadge from "./StatusBadge";
 
-export default function CardPagamento({
-  pagamento,
-  confirmar,
-  estornar,
-  carregando,
-}) {
-  const opcaoStatus = OPCOES_STATUS_PAGAMENTO.find(
-    (opcao) => opcao.valor === pagamento.status,
-  );
-  const opcaoForma = OPCOES_FORMA_PAGAMENTO.find(
-    (opcao) => opcao.valor === pagamento.forma_pagamento,
-  );
-
+export default function CardPagamento({ pagamento, aoExcluir }) {
   return (
     <article className="cartao-glass">
       <div className="cabecalho-cartao">
-        <span className="numero-contrato">Recibo nº {pagamento.id}</span>
-        <span className="etiqueta-status" data-status={pagamento.status}>
-          {opcaoStatus?.rotulo ?? String(pagamento.status).toLowerCase()}
-        </span>
+        <span className="numero-contrato">Pagamento nº {pagamento.id}</span>
+        <StatusBadge status={pagamento.status} tipo="pagamento" />
       </div>
-      <h2 className="nome-jogo">R$ {Number(pagamento.valor).toFixed(2)}</h2>
-      <p className="detalhe-texto">Contrato origem: {pagamento.id_aluguel}</p>
+      <h2 className="nome-jogo">{pagamento.valorFormatado}</h2>
+      <p className="detalhe-texto">Aluguel: {pagamento.aluguelId}</p>
+      <p className="detalhe-texto">Método: {pagamento.metodo}</p>
       <p className="detalhe-texto">
-        Método:{" "}
-        {opcaoForma?.rotulo ?? String(pagamento.forma_pagamento).toLowerCase()}
+        Data do pagamento: {pagamento.dataPagamentoFormatada}
       </p>
-
-      {pagamento.status === STATUS_PAGAMENTO.PENDENTE && (
-        <div className="acoes-cartao">
-          <button
-            className="botao-acao"
-            type="button"
-            disabled={carregando}
-            onClick={() => confirmar(pagamento.id)}
-          >
-            Confirmar
-          </button>
-          <button
-            className="botao-acao-vazado"
-            type="button"
-            disabled={carregando}
-            onClick={() => estornar(pagamento.id)}
-          >
-            Estornar
-          </button>
-        </div>
-      )}
-      {pagamento.status === STATUS_PAGAMENTO.PAGO && (
-        <div className="acoes-cartao">
-          <button
-            className="botao-acao-vazado"
-            type="button"
-            disabled={carregando}
-            onClick={() => estornar(pagamento.id)}
-          >
-            Estornar
-          </button>
-        </div>
-      )}
+      <div className="acoes-cartao">
+        <button className="botao-acao-vazado" type="button" onClick={aoExcluir}>
+          Excluir
+        </button>
+      </div>
     </article>
   );
 }
