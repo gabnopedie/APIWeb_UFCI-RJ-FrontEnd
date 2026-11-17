@@ -1,5 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import PecaTabuleiro3D from "../components/PecaTabuleiro3D";
+import { AuthProvider } from "../contexts/AuthContext";
+import LayoutPadrao from "../layouts/LayoutPadrao";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,10 +21,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <PecaTabuleiro3D />
-        {children}
+        <AuthProvider>
+          <LayoutPadrao>{children}</LayoutPadrao>
+        </AuthProvider>
       </body>
     </html>
   );

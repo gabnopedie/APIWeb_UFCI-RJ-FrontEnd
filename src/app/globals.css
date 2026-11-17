@@ -658,3 +658,171 @@ h6 {
     grid-template-columns: 1fr;
   }
 }
+
+.navbar-glass {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: min(calc(100% - 2rem), 1200px);
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem auto 0;
+  padding: 0.65rem 1rem;
+  background: rgba(30, 15, 5, 0.62);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.navbar-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 1rem;
+}
+
+.navbar-links a {
+  color: #ffffff;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.navbar-links a:hover,
+.navbar-links a:focus-visible {
+  color: var(--cor-dourada-suave);
+}
+
+.tabela-glass {
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  overflow: hidden;
+  background: rgba(30, 15, 5, 0.58);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+
+.tabela-rolagem {
+  width: 100%;
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.tabela-glass table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #ffffff;
+}
+
+.tabela-glass th,
+.tabela-glass td {
+  padding: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tabela-glass th {
+  color: var(--cor-dourada-suave);
+  font-weight: 650;
+}
+
+.paginacao-glass {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  color: #ffffff;
+}
+
+.paginacao-glass button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.modal-fundo {
+  position: fixed;
+  z-index: 5;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.modal-glass {
+  width: min(100%, 28rem);
+  padding: 1.5rem;
+  background: rgba(35, 18, 8, 0.94);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+}
+
+.modal-glass h2 {
+  margin-top: 0;
+}
+
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 1.7rem;
+  padding: 0.25rem 0.65rem;
+  color: #f3dfbd;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(197, 160, 89, 0.2);
+  border: 1px solid rgba(212, 163, 115, 0.45);
+  border-radius: 999px;
+}
+
+.badge-status[data-status="ATIVO"],
+.badge-status[data-status="PAGO"],
+.badge-status[data-status="CONCLUIDO"] {
+  color: #d3f0d7;
+  background: rgba(35, 105, 57, 0.45);
+  border-color: rgba(130, 205, 145, 0.45);
+}
+
+.badge-status[data-status="PENDENTE"] {
+  color: #ffedb5;
+  background: rgba(140, 103, 23, 0.38);
+  border-color: rgba(232, 190, 92, 0.48);
+}
+
+.badge-status[data-status="ATRASADO"],
+.badge-status[data-status="CANCELADO"],
+.badge-status[data-status="ESTORNADO"] {
+  color: #ffd5d1;
+  background: rgba(125, 35, 30, 0.48);
+  border-color: rgba(225, 125, 115, 0.45);
+}
+
+@media (max-width: 760px) {
+  .navbar-glass {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .navbar-links {
+    gap: 0.6rem 0.85rem;
+  }
+
+  .paginacao-glass {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+}
