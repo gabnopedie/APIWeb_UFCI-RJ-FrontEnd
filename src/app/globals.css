@@ -542,6 +542,20 @@ main,
   border-color: #d2d2d7;
 }
 
+.acesso-usuario-home {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+  gap: 0.5rem;
+}
+
+.icone-usuario-home {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
 .botao-acao-vazado:hover {
   color: #ffffff;
   background: rgba(65, 35, 15, 0.75);
@@ -696,6 +710,22 @@ h6 {
   color: var(--cor-dourada-suave);
 }
 
+.navbar-auth {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links a.navbar-link-ativo {
+  color: var(--cor-dourada-suave);
+  background: rgba(197, 160, 89, 0.12);
+  border-radius: 6px;
+  padding: 0.35rem 0.5rem;
+}
+
+.navbar-menu-toggle {
+  display: none;
+}
+
 .tabela-glass {
   width: 100%;
   margin: 1rem auto;
@@ -812,17 +842,68 @@ h6 {
 }
 
 @media (max-width: 760px) {
-  .navbar-glass {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .navbar-links {
-    gap: 0.6rem 0.85rem;
-  }
-
   .paginacao-glass {
     gap: 0.5rem;
     flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-interna {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "menu auth";
+  }
+
+  .navbar-interna .navbar-auth {
+    grid-area: auth;
+    justify-self: end;
+  }
+
+  .navbar-interna .navbar-links {
+    display: none;
+  }
+
+  .navbar-interna .navbar-links-aberto {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    left: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    background: rgba(30, 15, 5, 0.88);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
+    backdrop-filter: blur(16px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+
+  .navbar-interna .navbar-links-aberto a {
+    padding: 0.65rem 0.75rem;
+    border-radius: 8px;
+  }
+
+  .navbar-interna .navbar-links-aberto a.navbar-link-ativo {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .navbar-interna .navbar-menu-toggle {
+    display: inline-flex;
+    grid-area: menu;
+    width: 2.4rem;
+    padding: 0;
+    font-size: 1.1rem;
+  }
+
+  .cabecalho-inicial .acesso-usuario-home {
+    position: static;
+    align-self: flex-end;
+    order: -1;
   }
 }
