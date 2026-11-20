@@ -1,12 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Ignorar artefatos de assistentes e IDEs
-.copilot/
-.cursor/
-.agent/
-.vscode/
-.idea/
-
 # dependencies
 /node_modules
 /.pnp
