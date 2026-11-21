@@ -70,7 +70,7 @@ export default function Jogos() {
 }
 
 const estilos = {
-  recipiente: { minHeight: '100vh', background: '#ffffff', fontFamily: 'sans-serif', color: '#333', margin: 0 },
+  recipiente: { minHeight: '100vh', background: '#ffffff', fontFamily: 'var(--font-serif), Georgia, serif', color: '#333', margin: 0 },
   barraSitema: { height: '38px', background: '#f5f5f5', borderBottom: '1px solid #ccc', display: 'flex', alignItems: 'center', padding: '0 16px' },
   pontosJanela: { display: 'flex', gap: '8px' },
   ponto: { width: '12px', height: '12px', borderRadius: '50%' },

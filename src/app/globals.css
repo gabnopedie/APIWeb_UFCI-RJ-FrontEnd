@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   --cor-dourada: #b8860b;
   --cor-dourada-suave: #c5a059;
   --cor-texto: #ffffff;
@@ -20,7 +20,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background: radial-gradient(circle at 50% 50%, #7a4b2c 0%, #381e10 50%, #110803 100%);
+  background: linear-gradient(90deg, #050607 0%, #171a1e 54%, #555b62 100%);
 }
 
 html {
@@ -32,7 +32,7 @@ body {
   isolation: isolate;
   min-height: 100vh;
   color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
 }
 
 button,
@@ -95,8 +95,9 @@ svg {
   display: block;
   width: 100%;
   max-width: 1040px;
-  margin-bottom: clamp(2rem, 6vw, 4rem);
-  padding: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: 0;
+  padding: clamp(1.35rem, 3vw, 1.75rem) clamp(1.5rem, 5vw, 2.5rem)
+    clamp(1.15rem, 2.5vw, 1.5rem);
   text-align: center;
 }
 
@@ -222,74 +223,26 @@ main,
 }
 
 .titulo-marca {
-  margin: 0 0 0.75rem;
+  margin: 0;
   font-size: clamp(1.65rem, 4vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.2;
 }
 
 .subtitulo-marca {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
   color: var(--cor-texto-suave);
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .descricao-inicial {
   margin: 0;
   color: var(--cor-texto-suave);
   font-size: clamp(1rem, 2.5vw, 1.25rem);
-}
-
-.grade-modulos {
-  display: grid;
-  width: 100%;
-  max-width: 1040px;
-  margin-left: auto;
-  margin-right: auto;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 1.25rem;
-}
-
-.cartao-modulo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  min-height: 6rem;
-  padding: 1.5rem;
-  text-decoration: none;
-  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
-}
-
-.cartao-modulo:hover,
-.cartao-modulo:focus-visible {
-  background: rgba(65, 35, 15, 0.65);
-  border-color: rgba(212, 163, 115, 0.55);
-  transform: translateY(-3px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75);
-}
-
-.titulo-cartao-modulo,
-.subtitulo-cartao-modulo {
-  display: block;
-}
-
-.titulo-cartao-modulo {
-  margin-bottom: 0.35rem;
-  font-size: 1rem;
-  font-weight: 650;
-}
-
-.subtitulo-cartao-modulo {
-  color: var(--cor-texto-suave);
-  font-size: 0.85rem;
-}
-
-.seta-dourada {
-  color: var(--cor-dourada);
-  font-size: 1.25rem;
 }
 
 .cabecalho-glass {
@@ -306,9 +259,9 @@ main,
   overflow: hidden;
   color: var(--cor-texto);
   text-align: center;
-  background: rgba(30, 15, 5, 0.45);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
-  backdrop-filter: blur(16px) saturate(120%);
+  background: rgba(15, 18, 22, 0.4);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: blur(8px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
@@ -387,12 +340,64 @@ main,
   border-radius: 999px;
 }
 
+.cabecalho-glass.cabecalho-inicial {
+  margin: 20px auto 0;
+  overflow: visible;
+}
+
+.menu-modulos-toggle {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 5;
+  min-height: 2.5rem;
+  padding: 0.55rem 0.75rem;
+}
+
+.menu-modulos-dropdown {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 1rem;
+  z-index: 6;
+  display: grid;
+  width: min(21rem, calc(100vw - 3rem));
+  max-height: min(65vh, 30rem);
+  gap: 0.25rem;
+  overflow-y: auto;
+  padding: 0.5rem;
+  background: rgba(15, 18, 22, 0.94);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+.menu-modulos-dropdown[hidden] {
+  display: none;
+}
+
+.menu-modulos-dropdown a {
+  padding: 0.7rem 0.85rem;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.menu-modulos-dropdown a:hover,
+.menu-modulos-dropdown a:focus-visible {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+}
+
 .area-filtros-glass,
 .cartao-glass,
 .formulario-glass {
-  background: rgba(30, 15, 5, 0.45);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
-  backdrop-filter: blur(16px) saturate(120%);
+  background: rgba(15, 18, 22, 0.4);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: blur(8px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
@@ -546,8 +551,9 @@ main,
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: 1;
+  z-index: 5;
   gap: 0.5rem;
+  text-decoration: none;
 }
 
 .icone-usuario-home {
@@ -558,7 +564,7 @@ main,
 
 .botao-acao-vazado:hover {
   color: #ffffff;
-  background: rgba(65, 35, 15, 0.75);
+  background: rgba(37, 43, 50, 0.82);
   border-color: rgba(212, 163, 115, 0.55);
 }
 
@@ -684,7 +690,7 @@ h6 {
   gap: 1rem;
   margin: 1rem auto 0;
   padding: 0.65rem 1rem;
-  background: rgba(30, 15, 5, 0.62);
+  background: rgba(15, 18, 22, 0.72);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
   backdrop-filter: blur(16px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -731,7 +737,7 @@ h6 {
   margin: 1rem auto;
   padding: 1rem;
   overflow: hidden;
-  background: rgba(30, 15, 5, 0.58);
+  background: rgba(15, 18, 22, 0.68);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
   backdrop-filter: blur(16px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -792,7 +798,7 @@ h6 {
 .modal-glass {
   width: min(100%, 28rem);
   padding: 1.5rem;
-  background: rgba(35, 18, 8, 0.94);
+  background: rgba(17, 21, 26, 0.96);
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -876,7 +882,7 @@ h6 {
     align-items: stretch;
     gap: 0.25rem;
     padding: 0.75rem;
-    background: rgba(30, 15, 5, 0.88);
+    background: rgba(15, 18, 22, 0.94);
     -webkit-backdrop-filter: blur(16px) saturate(120%);
     backdrop-filter: blur(16px) saturate(120%);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -902,8 +908,20 @@ h6 {
   }
 
   .cabecalho-inicial .acesso-usuario-home {
-    position: static;
-    align-self: flex-end;
-    order: -1;
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    align-self: auto;
+    order: 0;
+  }
+
+  .menu-modulos-toggle {
+    top: 0.75rem;
+    left: 0.75rem;
+  }
+
+  .menu-modulos-dropdown {
+    top: calc(100% + 0.5rem);
+    left: 0.75rem;
   }
 }

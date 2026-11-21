@@ -184,7 +184,7 @@ export default function NovoJogo() {
 }
 
 const estilos = {
-  recipiente: { minHeight: '100vh', background: '#f9f9fb', fontFamily: 'sans-serif', color: '#333', margin: 0 },
+  recipiente: { minHeight: '100vh', background: '#f9f9fb', fontFamily: 'var(--font-serif), Georgia, serif', color: '#333', margin: 0 },
   barraSitema: { height: '38px', background: '#ffffff', borderBottom: '1px solid #eee', display: 'flex', alignItems: 'center', padding: '0 16px' },
   pontosJanela: { display: 'flex', gap: '8px' },
   ponto: { width: '12px', height: '12px', borderRadius: '50%' },
